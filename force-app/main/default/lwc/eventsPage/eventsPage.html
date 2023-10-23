@@ -1,3 +1,49 @@
 <template>
-    
+    <lightning-card title="Upcomming Events">
+
+
+        <lightning-input class="search" type="search" name="enter-search" value={searchvalue}
+            placeholder="Search Event here..." onchange={onsearchvaluechange}></lightning-input>
+
+        <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">
+            <div class="Container" key={event.Id}>
+
+                <div class="event-name">{event.Name}</div>
+
+                <div class="event-date">
+                    <lightning-icon icon-name='standard:key_dates' alternative-text='key_dates' size='x-small'
+                        title='key_dates' class="datetimeicon"></lightning-icon>
+                    <div class="eventdate">{event.Date_and_Time__c}</div>
+                </div>
+
+                <!-- <img src={event.Event_Image__c} alt={event.Name} class="event-image" /> -->
+
+                <div class="img">
+                    <img src={dasra} alt={event.Name} class="event-image" />
+                </div>
+
+
+                <div class="location">
+                    <lightning-icon icon-name='utility:checkin' alternative-text='checkin' size='small'
+                        title='checkin'></lightning-icon>
+                    <b class="locationtext">{event.Location__c}</b>
+                </div>
+
+                <div class="allInformation">
+                    <h1><b>Society: </b>{event.Society__c}</h1>
+                    <h1><b>Organizer: </b>{event.Organizer__c}</h1>
+                    <h1><b>Eligibility: </b>{event.Eligibility__c}</h1>
+                </div>
+
+                <template if:true={Registrationrequired}>
+                    <lightning-button variant="base" label="Register Here" onclick={handleClick}></lightning-button>
+                </template>
+
+            </div>
+        </template>
+
+
+
+
+    </lightning-card>
 </template>
