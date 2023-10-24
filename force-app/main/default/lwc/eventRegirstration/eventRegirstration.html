@@ -1,0 +1,26 @@
+<template>
+
+    <template if:true={RegistrationTemplate}>
+        <lightning-card title="Register for Event">
+            <div class="slds-box">
+                <lightning-record-edit-form object-api-name="Event_Registration__c">
+                    <lightning-input-field field-name="Event__c"></lightning-input-field>
+                    <lightning-input-field field-name="Resident__c"></lightning-input-field>
+
+
+                    <div style="display: flex; justify-content: space-between; margin-top:15px">
+                        <lightning-button variant="neutral" label="Cancel" title="Cancel"
+                            onclick={handleCancel}></lightning-button>
+                        <lightning-button type="submit" label="Register" variant="brand"
+                            onclick={handleRegister}></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={EventDataTemplate}>
+        <c-events-page> </c-events-page>
+    </template>
+
+</template>

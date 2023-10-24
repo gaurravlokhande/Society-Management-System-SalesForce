@@ -1,44 +1,54 @@
+.upcoming-events{
+    background-color: chocolate;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    color: white;
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    font-family: cursive;
+
+}
 .search{
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
 .Container{
-    border: 2px solid gray;
-    box-shadow:gray ;
-    border-radius: 15px;
+    border: 2px solid chocolate;
+    box-shadow:chocolate ;
+    /* border-radius: 15px; */
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
+    background-color: rgb(232, 173, 130);
 }
 .event-name{
     font-size: large;
+    font-family: Georgia, serif;
     font-weight: bold;
     margin-left: 10px;
+    margin-top: 7px;
 }
 .event-date{
     margin-left: 10px;
-  display: flex;
+    display: flex;
+  
 }
 .eventdate{
-    font-size: smaller;
+    font-size: small;
+    font-family: Georgia, serif;
     font-weight: bold;
     margin-left:7px;
 }
-
 .img{
     display: flex;
    justify-content: center;
 
 }
 .event-image{
- 
     height: 50%;
     width: 50%;
-    border-radius: 10px;
-    border-color: black;
-    margin-left: 10px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -47,12 +57,22 @@
     justify-content: center;
 }
 .locationtext{
- font-style: italic;
- font-size: medium;
-    
+font-family: Georgia, serif;
+ font-size: medium; 
+ color: rgb(72, 72, 210);  
 }
 .allInformation{
-  margin-bottom: 5px;
-  margin-left: 10px;
-  margin-top: 10px;
+    margin-top: 10px;
+    font-family: Georgia, serif;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: medium;
+    margin-left: 10px;
+    
+}
+.buttonregistration{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
