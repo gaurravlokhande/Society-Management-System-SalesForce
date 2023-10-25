@@ -11,13 +11,13 @@
                 placeholder="Search Event here..." onchange={onsearchvaluechange}></lightning-input>
 
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">
-                <div class="Container" key={event.Id}>
 
-                    <div class="event-name">
+                <div class="Container" key={event.Id}>
+                    <div class="event-name" key={event.Id}>
                         <li>{event.Name}</li>
                     </div>
 
-                    <div class="event-date">
+                    <div class="event-date" key={event.Id}>
                         <lightning-icon icon-name='standard:key_dates' alternative-text='key_dates' size='x-small'
                             title='key_dates' class="datetimeicon"></lightning-icon>
 
@@ -26,32 +26,32 @@
                             time-zone="UTC"></lightning-formatted-date-time>
                     </div>
 
-                    <div class="img">
+                    <div class="img" key={event.Id}>
                         <lightning-formatted-rich-text class="event-image"
                             value={event.Event_Image__c}></lightning-formatted-rich-text>
                     </div>
 
-                    <div class="location">
+                    <div class="location" key={event.Id}>
                         <lightning-icon icon-name='utility:checkin' alternative-text='checkin' size='small'
                             title='checkin'></lightning-icon>
                         <b class="locationtext">{event.Location__c}</b>
                     </div>
 
-                    <div class="allInformation">
+                    <div class="allInformation" key={event.Id}>
                         <div>
-                            <h1><b>Society: </b>{event.Society__c}</h1>
-                            <h1><b>Organizer: </b>{event.Organizer__c}</h1>
-                            <h1><b>Eligibility: </b>{event.Eligibility__c}</h1>
+                            <h1><b>SOCIETY : </b>{event.Society__r.Name}</h1>
+                            <h1><b>ORGANIZER : </b>{event.Organizer__r.Name}</h1>
+                            <h1><b>ELIGIBILITY : </b>{event.Eligibility__c}
+                            </h1>
                         </div>
                     </div>
 
                     <template if:true={Registrationrequired}>
-                        <lightning-button class="buttonregistration" variant="brand" label="Register Here"
-                            onclick={handleClickOfRegistrationButton} icon-name='utility:edit_form'></lightning-button>
+                        <lightning-button key={event.Id} class="buttonregistration" variant="brand"
+                            label="Register Here" onclick={handleClickOfRegistrationButton}
+                            icon-name='utility:edit_form'></lightning-button>
                     </template>
-
                 </div>
-
             </template>
 
         </lightning-card>

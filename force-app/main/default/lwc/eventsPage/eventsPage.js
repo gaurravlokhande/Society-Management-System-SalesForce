@@ -1,9 +1,9 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import GetEventsData from '@salesforce/apex/SocietyManagementSystem.SearchEvents';
 
 export default class EventsPage extends LightningElement {
 
-
+   
     @track EventPageTemplate = true;
     @track registrationtamplate = false;
     @track Registrationrequired = true;
@@ -34,4 +34,8 @@ export default class EventsPage extends LightningElement {
         this.EventPageTemplate = false;
         this.registrationtamplate = true;
     }
+
+
+   
+
 }

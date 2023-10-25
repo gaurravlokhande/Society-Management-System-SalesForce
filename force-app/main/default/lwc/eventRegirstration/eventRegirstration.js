@@ -7,6 +7,11 @@ export default class EventRegirstration extends LightningElement {
    
     
     handleRegister() {
+
+         this.template.querySelectorAll('lightning-input-field').forEach(field => {
+            field.value = null;
+         });
+        
         this.dispatchEvent(new ShowToastEvent({
             title: "Registered",
             message: "Successfully Registered",

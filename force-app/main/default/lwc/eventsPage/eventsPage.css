@@ -1,12 +1,17 @@
 .upcoming-events{
-    background-color: chocolate;
+    /* background-color: rgb(247, 125, 49); */
     padding-top: 17px;
     padding-bottom: 17px;
-    color: white;
+    /* color: white; */
     font-size: larger;
     display: flex;
     justify-content: center;
     font-family: cursive;
+    box-shadow: 5px 5px 5px rgb(198, 107, 46);
+    border-radius: 10px 100px / 120px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid rgb(15, 15, 15);
 
 }
 .search{
@@ -15,13 +20,14 @@
     margin-bottom: 10px;
 }
 .Container{
-    border: 2px solid chocolate;
-    box-shadow:chocolate ;
-    /* border-radius: 15px; */
+    margin-top: 20px;
+    border: 1px solid rgb(15, 15, 15);
+    box-shadow: 5px 5px 5px rgb(198, 107, 46);
+    border-radius: 7px; 
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
-    background-color: rgb(232, 173, 130);
+     /* background-color: rgb(247, 125, 49); */
 }
 .event-name{
     font-size: large;
@@ -59,7 +65,7 @@
 .locationtext{
 font-family: Georgia, serif;
  font-size: medium; 
- color: rgb(72, 72, 210);  
+ color: rgb(58, 58, 148);  
 }
 .allInformation{
     margin-top: 10px;
