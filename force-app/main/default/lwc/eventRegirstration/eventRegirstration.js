@@ -4,9 +4,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class EventRegirstration extends LightningElement {
 
-   
+
+
+
     
-    handleRegister() {
+    handleRegisterbutton() {
 
          this.template.querySelectorAll('lightning-input-field').forEach(field => {
             field.value = null;

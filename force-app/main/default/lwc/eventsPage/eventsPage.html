@@ -46,11 +46,12 @@
                         </div>
                     </div>
 
-                    <template if:true={Registrationrequired}>
+                    <template if:true={event.Registrationrequired}>
                         <lightning-button key={event.Id} class="buttonregistration" variant="brand"
                             label="Register Here" onclick={handleClickOfRegistrationButton}
                             icon-name='utility:edit_form'></lightning-button>
                     </template>
+
                 </div>
             </template>
 

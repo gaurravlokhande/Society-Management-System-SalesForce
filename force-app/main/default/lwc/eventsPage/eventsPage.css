@@ -1,13 +1,12 @@
 .upcoming-events{
-    /* background-color: rgb(247, 125, 49); */
+    background-color: rgb(236, 243, 240); 
     padding-top: 17px;
     padding-bottom: 17px;
-    /* color: white; */
     font-size: larger;
     display: flex;
     justify-content: center;
     font-family: cursive;
-    box-shadow: 5px 5px 5px rgb(198, 107, 46);
+    box-shadow: 5px 5px 5px rgb(73, 74, 74);
     border-radius: 10px 100px / 120px;
     margin-left: 5px;
     margin-right: 5px;
@@ -22,12 +21,13 @@
 .Container{
     margin-top: 20px;
     border: 1px solid rgb(15, 15, 15);
-    box-shadow: 5px 5px 5px rgb(198, 107, 46);
+    box-shadow: 5px 5px 5px  rgb(236, 243, 240); 
     border-radius: 7px; 
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
-     /* background-color: rgb(247, 125, 49); */
+    background-color:rgb(236, 243, 240);
+    box-shadow: 5px 5px 5px rgb(73, 74, 74);
 }
 .event-name{
     font-size: large;
