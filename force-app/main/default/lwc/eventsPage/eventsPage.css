@@ -13,6 +13,14 @@
     border: 1px solid rgb(15, 15, 15);
 
 }
+.event-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgb(236, 243, 240);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 .search{
     margin-left: 10px;
     margin-right: 10px;

@@ -1,0 +1,53 @@
+.signup-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgb(236, 243, 240);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-fields {
+    margin: 20px 0;
+}
+.first-lastname{
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.sign-up {
+    display: flex;
+    justify-content: center;
+    font-size: medium;
+    margin-bottom: 20px;
+    font: small-caps bold 24px/1 sans-serif;
+}
+
+
+/* Style for the centered <hr> tag */
+.centered-hr {
+   margin-top: 20px;
+    border: none;
+    height: 2px;
+    background-color: #333;
+}
+.already-user {
+    margin-top: 15px;
+    text-align: center;
+    /* Center-align the text within the parent */
+}
+
+.login {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login:hover {
+    background-color: rgb(53, 53, 157);
+    color: white;
+}

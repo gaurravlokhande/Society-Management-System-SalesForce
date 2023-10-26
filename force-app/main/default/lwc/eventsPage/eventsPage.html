@@ -1,14 +1,15 @@
 <template>
 
     <template if:true={EventPageTemplate}>
-        <lightning-card>
+
+        <div class="event-container">
 
 
             <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
 
 
             <lightning-input class="search" type="search" name="enter-search" value={searchvalue}
-                placeholder="Search Event here..." onchange={onsearchvaluechange}></lightning-input>
+                placeholder="Search Events here..." onchange={onsearchvaluechange}></lightning-input>
 
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">
 
@@ -54,8 +55,7 @@
 
                 </div>
             </template>
-
-        </lightning-card>
+        </div>
     </template>
 
     <template if:true={registrationtamplate}>
