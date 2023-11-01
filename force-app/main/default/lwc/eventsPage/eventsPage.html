@@ -1,16 +1,15 @@
 <template>
-
-    <template if:true={EventPageTemplate}>
-
+    <template if:true={Showeventstemplate}>
         <div class="event-container">
 
 
             <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
 
-
+            <!-- Search for events -->
             <lightning-input class="search" type="search" name="enter-search" value={searchvalue}
                 placeholder="Search Events here..." onchange={onsearchvaluechange}></lightning-input>
 
+            <!-- Events Data template -->
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">
 
                 <div class="Container" key={event.Id}>
@@ -47,20 +46,51 @@
                         </div>
                     </div>
 
+                    <!-- Register here and add new family member buttons -->
                     <template if:true={event.Registrationrequired}>
-                        <lightning-button key={event.Id} class="buttonregistration" variant="brand"
-                            label="Register Here" onclick={handleClickOfRegistrationButton}
-                            icon-name='utility:edit_form'></lightning-button>
+                        <div class="register-buttons">
+                            <lightning-button key={event.Id} data-recordid={event.Id} class="buttonregistration"
+                                variant="brand" label="Register Here" onclick={handleClickOfRegistrationButton}
+                                icon-name='utility:edit_form'></lightning-button>
+
+                            <lightning-button class="addfamily" variant="base" icon-name='utility:adduser' size="large"
+                                onclick={handleClickRegisterFamilyMembers}></lightning-button>
+                        </div>
+                    </template>
+
+                    <!-- are u sure want register modal -->
+                    <template if:true={registrationtamplate}>
+                        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                            class="slds-modal slds-fade-in-open"
+                            style="width: 400px; height: 300px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <lightning-input type="checkbox" label="Are you sure you want to register"
+                                        checked={CheckboxValue} onchange={oncheckboxchange}></lightning-input>
+                                </div>
+                                <div class="slds-modal__footer slds-modal__footer_directional">
+                                    <button class="slds-button slds-button_neutral"
+                                        onclick={handleNoofUserRegistration}>No</button>
+                                    <button class="slds-button slds-button_brand"
+                                        onclick={handleYESfUserRegistration}>Yes</button>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
                     </template>
 
                 </div>
             </template>
+
         </div>
     </template>
 
-    <template if:true={registrationtamplate}>
-        <c-event-regirstration> </c-event-regirstration>
+    <template if:true={registerfamilymembers}>
+        <c-event-regirstration></c-event-regirstration>
     </template>
+
+
+
 
 
 </template>

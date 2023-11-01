@@ -1,16 +1,19 @@
 import { LightningElement, track, api } from 'lwc';
 import SignupUser from '@salesforce/apex/SocietyManagementSystem.createAccountAndContact';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class SignUpScreen extends LightningElement {
+export default class SignUpScreen extends NavigationMixin (LightningElement) {
+
+
     @track firstName;
     @track lastName;
     @track mobile;
     @track email;
+    @track password;
+    @track confirmpassword;
 
-    @track SignupScreenTemplate = true;
-    @track loginScreenTemplate = false;
-    @track password = '';
+
 
     handleFirstNameChange(event) {
         this.firstName = event.target.value;
@@ -32,35 +35,61 @@ export default class SignUpScreen extends LightningElement {
         this.password = event.target.value;
     }
 
-    handleSignUp() {
-        SignupUser({
-            firstName: this.firstName,
-            lastName: this.lastName,
-            Phone: this.mobile,
-            email: this.email
-        })
-        .then(result => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'sucerss',
-                    variant: 'success'
-                })
-            );
-        })
-        .catch(error => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: 'error',
-                    variant: 'error'
-                })
-            );
-        });
+    handleConfirmPasswordChange(event) {
+        this.confirmpassword = event.target.value;
     }
 
-    handleLogin() {
-        this.SignupScreenTemplate = false;
-        this.loginScreenTemplate = true;
+    handleSignUp() {
+
+        if (this.password === this.confirmpassword) {
+            
+            SignupUser({
+                firstName: this.firstName,
+                lastName: this.lastName,
+                Phone: this.mobile,
+                email: this.email,
+                Password: this.password
+            })
+                .then(result => {
+
+                    this[NavigationMixin.Navigate]({
+                        type: "standard__webPage",
+                        attributes: {
+                           url: "https://thecodingstudio-dev-ed.develop.my.site.com/sms/s/login"
+                        }
+                    });
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'Logined Sucessfully',
+                            variant: 'success'
+                        })
+                    );
+                })
+                .catch(error => {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: error.body.message,
+                            variant: 'error'
+                        })
+                    );
+                });
+        } else {
+            alert('password not matched');
+        }
+      
     }
+
+
+    handleLogin() {
+         this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://thecodingstudio-dev-ed.develop.my.site.com/sms/s/login"
+            }
+          });
+    }
+
+
 }

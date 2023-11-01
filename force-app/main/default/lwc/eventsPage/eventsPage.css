@@ -85,8 +85,18 @@ font-family: Georgia, serif;
     margin-left: 10px;
     
 }
-.buttonregistration{
+.register-buttons{
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+}
+.addfamily{
+    margin-left: 9px;
+}
+
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    height: 300px;
 }

@@ -1,4 +1,4 @@
-public with sharing  class SocietyManagementSystem  {
+public without sharing  class SocietyManagementSystem  {
 
     @AuraEnabled
   public static List<Event__c> SearchEvents(String searchinit) {
@@ -10,8 +10,8 @@ public with sharing  class SocietyManagementSystem  {
     
     
    @AuraEnabled 
-    public static String createAccountAndContact(String firstName, String lastName, String email, String Phone) {
-        try {
+    public static void createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
+      
              Account acc = new Account();
              acc.Name = firstName + ' ' + lastName;
              acc.Email__c = email;
@@ -26,7 +26,7 @@ public with sharing  class SocietyManagementSystem  {
                 con.Phone =Phone;
                 insert con;
             
-            // Create a User record related to the Contact
+            
             User user = new User();
                 user.Username = email;
                 user.ContactId = con.Id;
@@ -38,19 +38,38 @@ public with sharing  class SocietyManagementSystem  {
                 user.TimeZoneSidKey = 'GMT';
                 user.LocaleSidKey = 'en_US';
                 user.EmailEncodingKey = 'UTF-8';
-               Profile desiredProfile = [SELECT Id FROM Profile WHERE Name = 'Customer Community Plus Login User' LIMIT 1];
+               Profile desiredProfile = [SELECT Id FROM Profile WHERE Name = 'Society Management System User' LIMIT 1];
                user.ProfileId = desiredProfile.Id;
                 user.LanguageLocaleKey = 'en_US';
                 user.IsActive = true;
-
+        
+   
             insert user;
+            System.setpassword(user.Id,Password);
+            site.login(user.Username,Password,'/sms/s');
  
-            return 'Success: Account and Contact created with ID ' + acc.Id;
-        } catch (Exception e) {
-            return 'Error: ' + e.getMessage();
+          
+    }
+    
+      @AuraEnabled
+    public static void registerForEvent(Id eventId) {
+ 
+    List<Resident__c> residentList = [SELECT Id, Name FROM Resident__c];
+    List<User> userList = [SELECT Id, Name FROM User WHERE Id = :UserInfo.getUserId()];
+   
+    Event_Registration__c registration = new Event_Registration__c();
+    registration.Event__c = eventId;
+    
+    for (Resident__c resident : residentList) {
+        for (User user : userList) {
+            if (resident.Name == user.Name) {
+                
+                registration.Resident__c = resident.Id;
+                insert registration;
+                return; 
+            }
         }
     }
-
-
+  }
    
    }

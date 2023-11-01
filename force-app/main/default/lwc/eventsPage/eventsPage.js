@@ -1,20 +1,26 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import GetEventsData from '@salesforce/apex/SocietyManagementSystem.SearchEvents';
+import ragistrationforevents from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
+//import Id from '@salesforce/user/Id';
+//import isGuest from '@salesforce/user/isGuest';
 
 export default class EventsPage extends LightningElement {
 
-   
-    @track EventPageTemplate = true;
+
+    @track Storeeventid;
+
+    @track Showeventstemplate = true;
+    @track registerfamilymembers = false;
     @track registrationtamplate = false;
+
     @track StoreEventData = [];
     @track searchvalue = '';
+    @track CheckboxValue;
 
 
     connectedCallback() {
         this.Searchandshowevents();
     }
-
-  
 
     Searchandshowevents() {
         GetEventsData({ searchinit: this.searchvalue })
@@ -32,26 +38,58 @@ export default class EventsPage extends LightningElement {
 
                 
                 this.StoreEventData = arr;
-
-
             })
             .catch((error) => {
                 this.StoreEventData = error;
             });
     }
 
- 
     onsearchvaluechange(event) {
         this.searchvalue = event.target.value;
         this.Searchandshowevents();
     }
 
-    handleClickOfRegistrationButton() {
-        this.EventPageTemplate = false;
+
+
+    handleClickOfRegistrationButton(event) {
         this.registrationtamplate = true;
+       this.Storeeventid = event.target.dataset.recordid;
     }
 
+    handleClickRegisterFamilyMembers() {
+        this.registerfamilymembers = true;
+        this.Showeventstemplate = false;
+    }
+    
 
+
+    oncheckboxchange(event) {
+    this.CheckboxValue = event.target.checked;
+     }
+
+    handleYESfUserRegistration() {
+        console.log('eventid'+this.Storeeventid);
+      if (this.CheckboxValue===true) {
+        ragistrationforevents({ eventId: this.Storeeventid })
+            .then(response => {
+                this.registrationtamplate = false;
+            })
+            .catch(error => {
+                console.error('Error:', error.body.message);
+            });
+       } else {
+        alert('Please check the checkbox');
+       }
+     }
+
+     handleNoofUserRegistration() {
+         this.registrationtamplate = false;
+         this.CheckboxValue = false;
+     }
+
+   
+
+   
    
 
 }

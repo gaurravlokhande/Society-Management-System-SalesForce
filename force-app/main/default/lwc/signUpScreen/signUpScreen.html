@@ -1,37 +1,35 @@
 <template>
 
-    <template if:true={SignupScreenTemplate}>
-        <div class="signup-container">
-            <h1 class="sign-up">Sign Up</h1>
-            <div class="form-fields">
-                <div class="first-lastname">
-                    <lightning-input label="First Name" value={firstName}
-                        onchange={handleFirstNameChange}></lightning-input>
-                    <lightning-input label="Last Name" value={lastName}
-                        onchange={handleLastNameChange}></lightning-input>
-                </div>
-                <lightning-input label="Email" type="email" value={email}
-                    onchange={handleEmailChange}></lightning-input>
-                <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange}></lightning-input>
-                <lightning-input label="Password" type="password" value={password}
-                    onchange={handlePasswordChange}></lightning-input>
+    <div class="signup-container">
+        <h1 class="sign-up">Sign Up</h1>
+        <div class="form-fields">
+            <div class="first-lastname">
+                <lightning-input label="First Name" value={firstName} required placeholder="First Name"
+                    onchange={handleFirstNameChange}></lightning-input>
+                <lightning-input label="Last Name" value={lastName} placeholder="Last Name" required
+                    onchange={handleLastNameChange}></lightning-input>
             </div>
-
-            <div class="buttons">
-                <lightning-button label="Sign Up" onclick={handleSignUp} variant="brand"></lightning-button>
-            </div>
-
-            <hr class="centered-hr">
-
-            <div class="already-user">
-                <h1>Already a user? <span class="login" onclick={handleLogin}>LOGIN</span></h1>
-            </div>
+            <lightning-input label="Email" type="email" value={email} placeholder="Email" required
+                onchange={handleEmailChange}></lightning-input>
+            <lightning-input label="Phone" type="tel" value={phone} placeholder="Phone No" onchange={handlePhoneChange}
+                required></lightning-input>
+            <lightning-input label=" Enter Password" type="password" placeholder="Password" value={password} required
+                onchange={handlePasswordChange}></lightning-input>
+            <lightning-input label=" Confirm Password" type="password" placeholder="Confirm Password"
+                value={confirmpassword} required onchange={handleConfirmPasswordChange}></lightning-input>
         </div>
-    </template>
 
-    <template if:true={loginScreenTemplate}>
-        <!-- Include your login component here -->
-        <c-login-screen></c-login-screen>
-    </template>
+        <div class="buttons">
+            <lightning-button label="Sign Up" onclick={handleSignUp} variant="brand"></lightning-button>
+        </div>
+
+        <hr class="centered-hr">
+
+        <div class="already-user">
+            <h1>Already a user? <span class="login" onclick={handleLogin}>LOGIN</span></h1>
+        </div>
+    </div>
+
+
 
 </template>
