@@ -2,7 +2,6 @@
     <template if:true={Showeventstemplate}>
         <div class="event-container">
 
-
             <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
 
             <!-- Search for events -->
@@ -85,10 +84,14 @@
         </div>
     </template>
 
+
     <template if:true={registerfamilymembers}>
         <c-event-regirstration></c-event-regirstration>
     </template>
 
+    <template if:true={modalscreen}>
+        <c-select-society-name-modal-screen onpassid={handlePassId}></c-select-society-name-modal-screen>
+    </template>
 
 
 

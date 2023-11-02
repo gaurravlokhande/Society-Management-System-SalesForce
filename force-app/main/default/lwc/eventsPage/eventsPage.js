@@ -18,24 +18,30 @@ export default class EventsPage extends LightningElement {
     @track CheckboxValue;
 
 
-    connectedCallback() {
+    // connectedCallback() {
+    //     this.Searchandshowevents();
+    // }
+
+    @track modalscreen = true;
+
+    eventid;
+
+    handlePassId(event) {
+        this.eventid = event.detail;
         this.Searchandshowevents();
     }
 
     Searchandshowevents() {
-        GetEventsData({ searchinit: this.searchvalue })
+        GetEventsData({ eventid: this.eventid })
             .then((result) => {
-
                 let arr = JSON.parse(JSON.stringify(result));
                 arr.forEach((item) => {
-                      console.log(item.Eligibility__c);
                     if (item.Eligibility__c == 'Registration Required') {
                         item["Registrationrequired"] = true;
                     } else {
                          item["Registrationrequired"] = false;
                     }
                 });
-
                 
                 this.StoreEventData = arr;
             })
@@ -67,18 +73,26 @@ export default class EventsPage extends LightningElement {
     this.CheckboxValue = event.target.checked;
      }
 
+    @track isChecked = false;
+    errorMessage = 'Please agree to the terms and conditions';
+    errorClass = 'slds-hide';
+    
+    
     handleYESfUserRegistration() {
         console.log('eventid'+this.Storeeventid);
       if (this.CheckboxValue===true) {
         ragistrationforevents({ eventId: this.Storeeventid })
             .then(response => {
-                this.registrationtamplate = false;
+                this.registrationtamplate = false;        
             })
             .catch(error => {
-                console.error('Error:', error.body.message);
+              this.dispatchEvent(new ShowToastEvent({
+                  message: "Not Registered",
+                  variant: "error"
+              }));
             });
        } else {
-        alert('Please check the checkbox');
+       // alert('Please check the checkbox');
        }
      }
 
