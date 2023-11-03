@@ -1,5 +1,5 @@
-import { LightningElement, track, api } from 'lwc';
-//import SignupUser from '@salesforce/apex/SocietyManagementSystem.createAccountAndContact';
+import { LightningElement, track } from 'lwc';
+import SignupUser from '@salesforce/apex/SocietyManagementSystem.createAccountAndContact';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -55,7 +55,7 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
                     this[NavigationMixin.Navigate]({
                         type: "standard__webPage",
                         attributes: {
-                           url: "https://thecodingstudio-dev-ed.develop.my.site.com/sms/s/login"
+                           url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/login"
                         }
                     });
                     this.dispatchEvent(
@@ -86,7 +86,7 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
          this[NavigationMixin.Navigate]({
             type: "standard__webPage",
             attributes: {
-               url: "https://thecodingstudio-dev-ed.develop.my.site.com/sms/s/login"
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/login"
             }
           });
     }

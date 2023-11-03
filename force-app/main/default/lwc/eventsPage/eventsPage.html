@@ -4,9 +4,6 @@
 
             <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
 
-            <!-- Search for events -->
-            <lightning-input class="search" type="search" name="enter-search" value={searchvalue}
-                placeholder="Search Events here..." onchange={onsearchvaluechange}></lightning-input>
 
             <!-- Events Data template -->
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">

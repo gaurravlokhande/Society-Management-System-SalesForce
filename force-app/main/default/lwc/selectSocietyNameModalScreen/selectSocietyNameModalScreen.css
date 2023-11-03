@@ -4,3 +4,8 @@
     width: 400px;
     height: 300px;
 }
+.savebtn{
+    margin-top: 10px;
+   display: flex;
+   justify-content: center;
+}

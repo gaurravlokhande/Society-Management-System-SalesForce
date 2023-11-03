@@ -1,34 +1,29 @@
 import { LightningElement, track } from 'lwc';
 import GetEventsData from '@salesforce/apex/SocietyManagementSystem.SearchEvents';
 import ragistrationforevents from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
-//import Id from '@salesforce/user/Id';
-//import isGuest from '@salesforce/user/isGuest';
 
 export default class EventsPage extends LightningElement {
 
-
-    @track Storeeventid;
+    
 
     @track Showeventstemplate = true;
     @track registerfamilymembers = false;
     @track registrationtamplate = false;
+    @track modalscreen = true;
+    
 
     @track StoreEventData = [];
-    @track searchvalue = '';
     @track CheckboxValue;
+    @track Storeeventid;
 
-
-    // connectedCallback() {
-    //     this.Searchandshowevents();
-    // }
-
-    @track modalscreen = true;
+   
 
     eventid;
 
     handlePassId(event) {
         this.eventid = event.detail;
         this.Searchandshowevents();
+        this.modalscreen = false;
     }
 
     Searchandshowevents() {
@@ -50,33 +45,13 @@ export default class EventsPage extends LightningElement {
             });
     }
 
-    onsearchvaluechange(event) {
-        this.searchvalue = event.target.value;
-        this.Searchandshowevents();
-    }
+   
 
-
-
-    handleClickOfRegistrationButton(event) {
-        this.registrationtamplate = true;
+     handleClickOfRegistrationButton(event) {
+       this.registrationtamplate = true;
        this.Storeeventid = event.target.dataset.recordid;
     }
 
-    handleClickRegisterFamilyMembers() {
-        this.registerfamilymembers = true;
-        this.Showeventstemplate = false;
-    }
-    
-
-
-    oncheckboxchange(event) {
-    this.CheckboxValue = event.target.checked;
-     }
-
-    @track isChecked = false;
-    errorMessage = 'Please agree to the terms and conditions';
-    errorClass = 'slds-hide';
-    
     
     handleYESfUserRegistration() {
         console.log('eventid'+this.Storeeventid);
@@ -92,8 +67,17 @@ export default class EventsPage extends LightningElement {
               }));
             });
        } else {
-       // alert('Please check the checkbox');
+       alert('Please check the checkbox');
        }
+     }
+
+    handleClickRegisterFamilyMembers() {
+        this.registerfamilymembers = true;
+        this.Showeventstemplate = false;
+    }
+
+     oncheckboxchange(event) {
+    this.CheckboxValue = event.target.checked;
      }
 
      handleNoofUserRegistration() {

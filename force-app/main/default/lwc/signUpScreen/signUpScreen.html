@@ -6,15 +6,19 @@
             <div class="first-lastname">
                 <lightning-input label="First Name" value={firstName} required placeholder="First Name"
                     onchange={handleFirstNameChange}></lightning-input>
+
                 <lightning-input label="Last Name" value={lastName} placeholder="Last Name" required
                     onchange={handleLastNameChange}></lightning-input>
             </div>
             <lightning-input label="Email" type="email" value={email} placeholder="Email" required
                 onchange={handleEmailChange}></lightning-input>
-            <lightning-input label="Phone" type="tel" value={phone} placeholder="Phone No" onchange={handlePhoneChange}
-                required></lightning-input>
+
+            <lightning-input label="Phone" maxlength="10" type="tel" value={phone} placeholder="Phone No"
+                onchange={handlePhoneChange} required></lightning-input>
+
             <lightning-input label=" Enter Password" type="password" placeholder="Password" value={password} required
                 onchange={handlePasswordChange}></lightning-input>
+
             <lightning-input label=" Confirm Password" type="password" placeholder="Confirm Password"
                 value={confirmpassword} required onchange={handleConfirmPasswordChange}></lightning-input>
         </div>
