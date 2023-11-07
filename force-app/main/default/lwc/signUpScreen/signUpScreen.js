@@ -58,6 +58,7 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
                            url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/login"
                         }
                     });
+
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
@@ -65,6 +66,7 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
                             variant: 'success'
                         })
                     );
+                    
                 })
                 .catch(error => {
                     this.dispatchEvent(

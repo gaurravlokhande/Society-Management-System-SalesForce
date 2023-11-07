@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class EventRegirstration extends LightningElement {
 
+    @track modalscreen = false;
 
     handleRegisterbutton() {
 

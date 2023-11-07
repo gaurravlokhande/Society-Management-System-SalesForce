@@ -1,13 +1,10 @@
 <template>
-    <template if:true={Showeventstemplate}>
+    <template if:true={EventSPageTemplate}>
         <div class="event-container">
-
             <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
-
 
             <!-- Events Data template -->
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">
-
                 <div class="Container" key={event.Id}>
                     <div class="event-name" key={event.Id}>
                         <li>{event.Name}</li>
@@ -16,7 +13,6 @@
                     <div class="event-date" key={event.Id}>
                         <lightning-icon icon-name='standard:key_dates' alternative-text='key_dates' size='x-small'
                             title='key_dates' class="datetimeicon"></lightning-icon>
-
                         <lightning-formatted-date-time class="eventdate" value={event.Date_and_Time__c} year="numeric"
                             month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="false"
                             time-zone="UTC"></lightning-formatted-date-time>
@@ -37,25 +33,22 @@
                         <div>
                             <h1><b>SOCIETY : </b>{event.Society__r.Name}</h1>
                             <h1><b>ORGANIZER : </b>{event.Organizer__r.Name}</h1>
-                            <h1><b>ELIGIBILITY : </b>{event.Eligibility__c}
-                            </h1>
+                            <h1><b>ELIGIBILITY : </b>{event.Eligibility__c}</h1>
                         </div>
                     </div>
 
                     <!-- Register here and add new family member buttons -->
                     <template if:true={event.Registrationrequired}>
                         <div class="register-buttons">
-                            <lightning-button key={event.Id} data-recordid={event.Id} class="buttonregistration"
-                                variant="brand" label="Register Here" onclick={handleClickOfRegistrationButton}
+                            <lightning-button data-recordid={event.Id} class="buttonregistration" variant="brand"
+                                label="Register Here" onclick={handleClickOfRegistrationButton}
                                 icon-name='utility:edit_form'></lightning-button>
-
-                            <lightning-button class="addfamily" variant="base" icon-name='utility:adduser' size="large"
-                                onclick={handleClickRegisterFamilyMembers}></lightning-button>
                         </div>
                     </template>
 
+
                     <!-- are u sure want register modal -->
-                    <template if:true={registrationtamplate}>
+                    <template if:true={CurrentUserRegistrationTemplate}>
                         <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
                             class="slds-modal slds-fade-in-open"
                             style="width: 400px; height: 300px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -75,22 +68,34 @@
                         <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
                     </template>
 
+
                 </div>
             </template>
-
         </div>
     </template>
 
 
-    <template if:true={registerfamilymembers}>
-        <c-event-regirstration></c-event-regirstration>
+    <template if:true={ShowSocietySelectToNotRagisteredUser}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Please Select Your Society</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <lightning-record-edit-form density="compact" object-api-name="Event__c">
+                        <lightning-input-field field-name="Society__c" data-id="society"
+                            variant="standard"></lightning-input-field>
+                        <div class="savebtn">
+                            <lightning-button variant="brand" type="submit" label="Save" onclick={handleClickOfSave}
+                                class="slds-var-p-around_medium">
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
     </template>
-
-    <template if:true={modalscreen}>
-        <c-select-society-name-modal-screen onpassid={handlePassId}></c-select-society-name-modal-screen>
-    </template>
-
-
-
 
 </template>

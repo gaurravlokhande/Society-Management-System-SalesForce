@@ -1,34 +1,64 @@
-import { LightningElement, track } from 'lwc';
-import GetEventsData from '@salesforce/apex/SocietyManagementSystem.SearchEvents';
-import ragistrationforevents from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
-
+import { LightningElement, track,wire } from 'lwc';
+import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.isCurrentUserSocietyEmpty';
+import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
+import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
+import registerForEvent from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
 export default class EventsPage extends LightningElement {
 
-    
+    @track EventSPageTemplate = false;
+    @track ShowSocietySelectToNotRagisteredUser = false;
 
-    @track Showeventstemplate = true;
-    @track registerfamilymembers = false;
-    @track registrationtamplate = false;
-    @track modalscreen = true;
-    
 
-    @track StoreEventData = [];
-    @track CheckboxValue;
-    @track Storeeventid;
+
+
 
    
-
-    eventid;
-
-    handlePassId(event) {
-        this.eventid = event.detail;
-        this.Searchandshowevents();
-        this.modalscreen = false;
+    connectedCallback() {
+        this.CheckCurrentUserSocietyField();
     }
 
-    Searchandshowevents() {
-        GetEventsData({ eventid: this.eventid })
-            .then((result) => {
+
+    @track SocietyExistContact;
+
+
+
+    CheckCurrentUserSocietyField() {
+    CheckCurrentUserSociety()
+        .then((result) => {
+        this.SocietyExistContact = result;
+        console.log(this.SocietyExistContact);
+        this.SocietyAlreadyexist();
+        this.ShowSocietySelectToNotRagisteredUser = false;
+        this.EventSPageTemplate = true;
+            
+    }).catch((error) => {
+        console.log(error.body.message);
+        this.ShowSocietySelectToNotRagisteredUser = true;
+     
+    });
+    }
+   
+
+    
+    handleClickOfSave() {
+        let inputField = this.template.querySelector('[data-id="society"]');
+        this.SocietyExistContact = inputField.value; 
+        this.SocietyAlreadyexist();
+        this.UpdateSocietyOnContact();
+        this.ShowSocietySelectToNotRagisteredUser = false;
+        this.EventSPageTemplate = true;
+    }
+
+
+
+
+
+    @track StoreEventData = [];
+
+    SocietyAlreadyexist() {
+        SearchEventsForAlreadyRagstered({ AlreadyRagistered:this.SocietyExistContact })
+        .then((result) => {
+            
                 let arr = JSON.parse(JSON.stringify(result));
                 arr.forEach((item) => {
                     if (item.Eligibility__c == 'Registration Required') {
@@ -39,13 +69,28 @@ export default class EventsPage extends LightningElement {
                 });
                 
                 this.StoreEventData = arr;
-            })
-            .catch((error) => {
-                this.StoreEventData = error;
-            });
+        }).catch((error) => {
+            
+        });
     }
 
+
+    UpdateSocietyOnContact() {
+     UpdateSocietyOnAccount({ SocietyId: this.SocietyExistContact })
+    .then((result) => {
+        
+    }).catch((err) => {
+        
+    });
+    }
    
+
+    // -------------------------Current User Registration------------------------------------------
+    @track Storeeventid;
+    @track CurrentUserRegistrationTemplate = false;
+
+
+
 
      handleClickOfRegistrationButton(event) {
        this.registrationtamplate = true;
@@ -56,7 +101,7 @@ export default class EventsPage extends LightningElement {
     handleYESfUserRegistration() {
         console.log('eventid'+this.Storeeventid);
       if (this.CheckboxValue===true) {
-        ragistrationforevents({ eventId: this.Storeeventid })
+        registerForEvent({ eventId: this.Storeeventid })
             .then(response => {
                 this.registrationtamplate = false;        
             })
@@ -71,11 +116,6 @@ export default class EventsPage extends LightningElement {
        }
      }
 
-    handleClickRegisterFamilyMembers() {
-        this.registerfamilymembers = true;
-        this.Showeventstemplate = false;
-    }
-
      oncheckboxchange(event) {
     this.CheckboxValue = event.target.checked;
      }
@@ -85,9 +125,9 @@ export default class EventsPage extends LightningElement {
          this.CheckboxValue = false;
      }
 
-   
 
-   
-   
+
+
+
 
 }
