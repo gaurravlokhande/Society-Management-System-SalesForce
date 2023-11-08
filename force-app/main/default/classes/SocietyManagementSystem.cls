@@ -41,32 +41,35 @@ public static String UpdateAccountSociety(String SocietyId) {
     return 'Account or User not found, or other issues occurred.';
 }
 
-    /*
-    // Register for events
-    @AuraEnabled
-public static void registerForEvent(Id eventId) {
+    
+    
+    // current user Register for events
+@AuraEnabled
+public static String checkUserRegister(String EventId) {
     String currentUserName = UserInfo.getUserName();
-    
-    List<Contact> residentList = [ SELECT Id, Email FROM Contact WHERE Email = :currentUserName LIMIT 1];
-    
-    List<Event_Registration__c> eventregistrationlist = [Select Email__c, Event__c, Resident__c FROM Event_Registration__c where Email__c =:residentList.Email ];
-        
-    for(Event_Registration__c eventregistration : eventregistrationlist ){
-        if(eventregistration.Email== eventregistrationlist.Email__c && eventregistration.Society )
+
+    List<Event_Registration__c> eventRegistrations = [SELECT Event__c, Email__c, Resident__c FROM Event_Registration__c WHERE Event__c = :EventId AND Email__c = :currentUserName];
+
+    if (eventRegistrations.size() > 0) {
+        return 'Already Registered';
+        } else {
+        List<Contact> ListOfAllContact =[SELECT Id From Contact where Email =:currentUserName];  
+        if (eventRegistrations.isEmpty()) {
+            Event_Registration__c newRegistration = new Event_Registration__c();
+            newRegistration.Event__c = EventId;
+            newRegistration.Email__c = currentUserName;
+            newRegistration.Resident__c =ListOfAllContact[0].Id;
+            insert newRegistration;
+            return 'User Registered Successfully';
+        }
     }
-    
-    
-    if (!residentList.isEmpty()) {
-        Event_Registration__c registration = new Event_Registration__c();
-        registration.Event__c = eventId;
-        registration.Email__c =residentList[0].Email;
-        registration.Resident__c = residentList[0].Id;
-        insert registration;
-    }
+
+    return 'User Not Registered';
 }
-*/
+
+  
     
-     
+     // Create Account Contact And User 
    @AuraEnabled 
     public static void createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
       
