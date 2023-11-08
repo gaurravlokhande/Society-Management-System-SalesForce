@@ -2,11 +2,11 @@ import { LightningElement, track,wire } from 'lwc';
 import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.isCurrentUserSocietyEmpty';
 import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
 import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
-import registerForEvent from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
+import registerForEvent from '@salesforce/apex/SocietyManagementSystem.checkUserRegister';
 export default class EventsPage extends LightningElement {
 
     @track EventSPageTemplate = false;
-    @track ShowSocietySelectToNotRagisteredUser = false;
+    @track ShowSocietySelectToNotRagisteredUser = true;
 
 
 
@@ -25,21 +25,25 @@ export default class EventsPage extends LightningElement {
     CheckCurrentUserSocietyField() {
     CheckCurrentUserSociety()
         .then((result) => {
+        //this.ShowSocietySelectToNotRagisteredUser = false;
         this.SocietyExistContact = result;
-        console.log(this.SocietyExistContact);
+       // console.log(this.SocietyExistContact);
         this.SocietyAlreadyexist();
-        this.ShowSocietySelectToNotRagisteredUser = false;
+        
         this.EventSPageTemplate = true;
             
     }).catch((error) => {
-        console.log(error.body.message);
-        this.ShowSocietySelectToNotRagisteredUser = true;
-     
+        //console.log(error.body.message);
+        if (error) {
+         this.ShowSocietySelectToNotRagisteredUser = true;
+        }
+      
     });
     }
    
 
-    
+    @track disableSocietyBtn;
+
     handleClickOfSave() {
         let inputField = this.template.querySelector('[data-id="society"]');
         this.SocietyExistContact = inputField.value; 
@@ -79,7 +83,7 @@ export default class EventsPage extends LightningElement {
      UpdateSocietyOnAccount({ SocietyId: this.SocietyExistContact })
     .then((result) => {
         
-    }).catch((err) => {
+    }).catch((error) => {
         
     });
     }
@@ -93,23 +97,23 @@ export default class EventsPage extends LightningElement {
 
 
      handleClickOfRegistrationButton(event) {
-       this.registrationtamplate = true;
+       this.CurrentUserRegistrationTemplate = true;
        this.Storeeventid = event.target.dataset.recordid;
+      // console.log(this.Storeeventid);
     }
 
     
     handleYESfUserRegistration() {
-        console.log('eventid'+this.Storeeventid);
+       //console.log(this.Storeeventid);
       if (this.CheckboxValue===true) {
-        registerForEvent({ eventId: this.Storeeventid })
+        registerForEvent({ EventId: this.Storeeventid })
             .then(response => {
-                this.registrationtamplate = false;        
+                alert(response);
+                this.CurrentUserRegistrationTemplate = false;        
             })
             .catch(error => {
-              this.dispatchEvent(new ShowToastEvent({
-                  message: "Not Registered",
-                  variant: "error"
-              }));
+                alert(error.body.message)
+                this.CurrentUserRegistrationTemplate= false
             });
        } else {
        alert('Please check the checkbox');
@@ -121,7 +125,7 @@ export default class EventsPage extends LightningElement {
      }
 
      handleNoofUserRegistration() {
-         this.registrationtamplate = false;
+         this.CurrentUserRegistrationTemplate = false;
          this.CheckboxValue = false;
      }
 

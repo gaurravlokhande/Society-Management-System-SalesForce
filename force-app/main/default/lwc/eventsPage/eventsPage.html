@@ -67,14 +67,13 @@
                         </section>
                         <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
                     </template>
-
-
                 </div>
             </template>
         </div>
     </template>
 
 
+    <!-- Select Society For New User -->
     <template if:true={ShowSocietySelectToNotRagisteredUser}>
         <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
             class="slds-modal slds-fade-in-open">
@@ -86,9 +85,13 @@
                     <lightning-record-edit-form density="compact" object-api-name="Event__c">
                         <lightning-input-field field-name="Society__c" data-id="society"
                             variant="standard"></lightning-input-field>
+                        <p style="color: rgb(192, 63, 63); margin-left: 5px;"> Once You Select Society It can't be
+                            changable, In case you
+                            want to
+                            change please contact Admin</p>
                         <div class="savebtn">
-                            <lightning-button variant="brand" type="submit" label="Save" onclick={handleClickOfSave}
-                                class="slds-var-p-around_medium">
+                            <lightning-button class="SaceButton" variant="brand" type="submit" label="Save"
+                                onclick={handleClickOfSave}>
                             </lightning-button>
                         </div>
                     </lightning-record-edit-form>

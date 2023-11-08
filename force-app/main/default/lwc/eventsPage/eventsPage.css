@@ -1,5 +1,5 @@
-.upcoming-events{
-    background-color: rgb(236, 243, 240); 
+.upcoming-events {
+    background-color: rgb(236, 243, 240);
     padding-top: 17px;
     padding-bottom: 17px;
     font-size: larger;
@@ -13,69 +13,80 @@
     border: 1px solid rgb(15, 15, 15);
 
 }
+
 .event-container {
-    max-width: 400px;
+    /* max-width: 400px; */
     margin: 0 auto;
     padding: 20px;
     background-color: rgb(236, 243, 240);
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
-.search{
+
+.search {
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
-.Container{
+
+.Container {
     margin-top: 20px;
     border: 1px solid rgb(15, 15, 15);
-    box-shadow: 5px 5px 5px  rgb(236, 243, 240); 
-    border-radius: 7px; 
+    box-shadow: 5px 5px 5px rgb(236, 243, 240);
+    border-radius: 7px;
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
-    background-color:rgb(236, 243, 240);
+    background-color: rgb(236, 243, 240);
     box-shadow: 5px 5px 5px rgb(73, 74, 74);
 }
-.event-name{
+
+.event-name {
     font-size: large;
     font-family: Georgia, serif;
     font-weight: bold;
     margin-left: 10px;
     margin-top: 7px;
 }
-.event-date{
+
+.event-date {
     margin-left: 10px;
     display: flex;
-  
+
 }
-.eventdate{
+
+.eventdate {
     font-size: small;
     font-family: Georgia, serif;
     font-weight: bold;
-    margin-left:7px;
+    margin-left: 7px;
 }
-.img{
+
+.img {
     display: flex;
-   justify-content: center;
+    justify-content: center;
 
 }
-.event-image{
+
+.event-image {
     height: 50%;
     width: 50%;
     margin-bottom: 10px;
     margin-top: 10px;
 }
-.location{
+
+.location {
     display: flex;
     justify-content: center;
 }
-.locationtext{
-font-family: Georgia, serif;
- font-size: medium; 
- color: rgb(58, 58, 148);  
+
+.locationtext {
+    font-family: Georgia, serif;
+    font-size: medium;
+    color: rgb(58, 58, 148);
 }
-.allInformation{
+
+.allInformation {
     margin-top: 10px;
     font-family: Georgia, serif;
     display: flex;
@@ -83,20 +94,26 @@ font-family: Georgia, serif;
     margin-bottom: 10px;
     font-size: medium;
     margin-left: 10px;
-    
+
 }
-.register-buttons{
+
+.register-buttons {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
 }
-.addfamily{
-    margin-left: 9px;
-}
 
+
+/* 
 .modal-dialog {
     display: flex;
     justify-content: center;
     width: 400px;
     height: 300px;
+} */
+
+.SaceButton {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
 }
