@@ -1,0 +1,9 @@
+.wholecontainer {
+    background-color: rgb(236, 243, 240);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.alloptions {
+    display: flex;
+    justify-content: space-between;
+}

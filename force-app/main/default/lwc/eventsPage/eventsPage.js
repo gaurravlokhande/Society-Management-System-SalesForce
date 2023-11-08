@@ -6,7 +6,7 @@ import registerForEvent from '@salesforce/apex/SocietyManagementSystem.checkUser
 export default class EventsPage extends LightningElement {
 
     @track EventSPageTemplate = false;
-    @track ShowSocietySelectToNotRagisteredUser = true;
+    @track ShowSocietySelectToNotRagisteredUser = false;
 
 
 
