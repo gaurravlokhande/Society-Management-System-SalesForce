@@ -5,6 +5,7 @@
             <!-- <p class="flatno"><b>{ShowfaltNo}</b></p> -->
             <lightning-formatted-rich-text style="width: 20%;margin-top:70px; height:20%; border-radius: 10px;"
                 value={profilepic}></lightning-formatted-rich-text>
+
             <p class="accname"><b>{ShowAccname}</b></p>
             <p class="email"><b>{ShowEmail}</b></p>
             <p class="phone"><b>{ShowPhone}</b></p>
@@ -16,10 +17,11 @@
 
 
 
-        <lightning-button class="addnewuser" variant="brand" label="Add Family Members"
-            onclick={handleClickofAddFamilyMember}></lightning-button>
 
-        <lightning-card>
+
+        <lightning-card title="Family Members">
+            <lightning-button class="addnewuser" variant="base" label="Add Family Members"
+                onclick={handleClickofAddFamilyMember}></lightning-button>
             <lightning-datatable key-field="Id" data={contacts} columns={columns} onrowaction={handleRowAction}>
             </lightning-datatable>
         </lightning-card>

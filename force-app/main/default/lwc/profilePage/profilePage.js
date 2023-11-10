@@ -97,6 +97,7 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
         }
     }
 
+    
 
     handleRowAction(event) {
         const action = event.detail.action.name;
