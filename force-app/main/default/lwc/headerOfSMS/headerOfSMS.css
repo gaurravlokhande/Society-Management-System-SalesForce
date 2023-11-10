@@ -6,4 +6,14 @@
 .alloptions {
     display: flex;
     justify-content: space-between;
+
+}
+.icondiv{
+  display: flex;
+  flex-direction: row;
+  margin-top: 13px;
+  font-family: "Times New Roman";
+}
+b:hover {
+    background-color: rgb(145, 145, 137);
 }

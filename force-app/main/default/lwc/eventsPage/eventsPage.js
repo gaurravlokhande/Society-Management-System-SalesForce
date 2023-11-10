@@ -2,7 +2,14 @@ import { LightningElement, track,wire } from 'lwc';
 import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.isCurrentUserSocietyEmpty';
 import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
 import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
-import registerForEvent from '@salesforce/apex/SocietyManagementSystem.checkUserRegister';
+import checkUserRegistrationForEvent from '@salesforce/apex/SocietyManagementSystem.checkUserRegistrationForEvent';
+import registerForEvent from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+
+//import makeRegisterbuttonhide from '@salesforce/apex/SocietyManagementSystem.makeRegisterbuttonhide';
+
+
 export default class EventsPage extends LightningElement {
 
     @track EventSPageTemplate = false;
@@ -97,40 +104,50 @@ export default class EventsPage extends LightningElement {
 
 
      handleClickOfRegistrationButton(event) {
-       this.CurrentUserRegistrationTemplate = true;
-       this.Storeeventid = event.target.dataset.recordid;
-      // console.log(this.Storeeventid);
+         this.Storeeventid = event.target.dataset.recordid;
+         console.log(this.Storeeventid)
+           checkUserRegistrationForEvent({eventId:this.Storeeventid})
+            .then((result)=>{
+                if(result=='Already Registered'){
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: "Already Registered",
+                        variant: "warning"
+                    }));
+                }else{
+                this.CurrentUserRegistrationTemplate = true;
+                }
+            })
+         
+         
     }
 
     
-    handleYESfUserRegistration() {
-       //console.log(this.Storeeventid);
-      if (this.CheckboxValue===true) {
-        registerForEvent({ EventId: this.Storeeventid })
-            .then(response => {
-                alert(response);
-                this.CurrentUserRegistrationTemplate = false;        
-            })
-            .catch(error => {
-                alert(error.body.message)
-                this.CurrentUserRegistrationTemplate= false
-            });
-       } else {
-       alert('Please check the checkbox');
-       }
-     }
 
-     oncheckboxchange(event) {
+     handleYESfUserRegistration() {
+                if(this.CheckboxValue == false){
+                   alert('Checkbox not selected');
+                } else{
+                    registerForEvent({eventId: this.Storeeventid })
+                    .then(result => {
+                        alert(result)
+                        this.CurrentUserRegistrationTemplate = false;
+                    })
+                    .catch(error => {
+                        console.error('Error registering for the event:', error.body.message);
+                    });
+                }     
+     }
+    
+    
+    oncheckboxchange(event) {
     this.CheckboxValue = event.target.checked;
      }
 
-     handleNoofUserRegistration() {
-         this.CurrentUserRegistrationTemplate = false;
-         this.CheckboxValue = false;
+    handleNoofUserRegistration() {
+        this.CheckboxValue = false;
+        this.CurrentUserRegistrationTemplate = false;
+        
      }
-
-
-
 
 
 

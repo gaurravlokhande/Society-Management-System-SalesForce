@@ -15,7 +15,7 @@
 }
 
 .event-container {
-    /* max-width: 400px; */
+   margin-top: 10px;
     margin: 0 auto;
     padding: 20px;
     background-color: rgb(236, 243, 240);

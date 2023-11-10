@@ -1,5 +1,51 @@
 public without sharing  class SocietyManagementSystem  {
 
+//SIGNUP PAGE METHODS---------------------------------------------------------------------------------------------------------------
+     // Create Account Contact And User 
+   @AuraEnabled 
+    public static void createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
+      
+             Account acc = new Account();
+             acc.Name = firstName + ' ' + lastName;
+             acc.Email__c = email;
+             acc.Phone =Phone;
+             insert acc;
+
+             Contact con = new Contact();
+                con.AccountId = acc.Id;
+                con.FirstName = firstName;
+                con.LastName = lastName;
+                con.Email = email;
+                con.Phone =Phone;
+                insert con;
+            
+            
+            User user = new User();
+                user.Username = email;
+                user.ContactId = con.Id;
+                user.LastName = lastName;
+                user.FirstName = firstName;
+                user.Email = email;
+                user.Alias = 'U-' + String.valueOf(Crypto.getRandomInteger()).substring(0, 6);
+                user.CommunityNickname = email;
+                user.TimeZoneSidKey = 'GMT';
+                user.LocaleSidKey = 'en_US';
+                user.EmailEncodingKey = 'UTF-8';
+               Profile desiredProfile = [SELECT Id FROM Profile WHERE Name = 'Society Management System User' LIMIT 1];
+               user.ProfileId = desiredProfile.Id;
+                user.LanguageLocaleKey = 'en_US';
+                user.IsActive = true;
+            insert user;
+            System.setpassword(user.Id,Password);
+            site.login(user.Username,Password,'/sms/s');
+          
+    }
+    
+//SIGNUP PAGE METHODS---------------------------------------------------------------------------------------------------------------  
+      
+    
+   
+//EVENT PAGE METHODS---------------------------------------------------------------------------------------------------------------
 
 // method to check wether current user contact society field is empty or not
 @AuraEnabled(cacheable=true)
@@ -42,13 +88,26 @@ public static String UpdateAccountSociety(String SocietyId) {
 }
 
     
+//To Check is user already registered or not
+   //To Check is user already registered or not
+    @AuraEnabled
+    public static String checkUserRegistrationForEvent(String eventId){
+        String currentUserName = UserInfo.getUserName();
+        List<Event_Registration__c> eventRegList = [Select Id, Event__c, Email__c From Event_Registration__c Where Email__c =: currentUserName AND Event__c =: eventId];
+        if (eventRegList.size() > 0) {
+        return 'Already Registered';
+        } 
+        return 'Please Register';
+    }
+    
     
     // current user Register for events
+   // current user Register for events
 @AuraEnabled
-public static String checkUserRegister(String EventId) {
+public static String registerForEvent(String eventId) {
     String currentUserName = UserInfo.getUserName();
 
-    List<Event_Registration__c> eventRegistrations = [SELECT Event__c, Email__c, Resident__c FROM Event_Registration__c WHERE Event__c = :EventId AND Email__c = :currentUserName];
+    List<Event_Registration__c> eventRegistrations = [SELECT Event__c, Email__c, Resident__c FROM Event_Registration__c WHERE Event__c = :eventId AND Email__c = :currentUserName];
 
     if (eventRegistrations.size() > 0) {
         return 'Already Registered';
@@ -56,7 +115,7 @@ public static String checkUserRegister(String EventId) {
         List<Contact> ListOfAllContact =[SELECT Id From Contact where Email =:currentUserName];  
         if (eventRegistrations.isEmpty()) {
             Event_Registration__c newRegistration = new Event_Registration__c();
-            newRegistration.Event__c = EventId;
+            newRegistration.Event__c = eventId;
             newRegistration.Email__c = currentUserName;
             newRegistration.Resident__c =ListOfAllContact[0].Id;
             insert newRegistration;
@@ -66,53 +125,74 @@ public static String checkUserRegister(String EventId) {
 
     return 'User Not Registered';
 }
+//EVENT PAGE METHODS---------------------------------------------------------------------------------------------------------------
 
-  
     
-     // Create Account Contact And User 
-   @AuraEnabled 
-    public static void createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
-      
-             Account acc = new Account();
-             acc.Name = firstName + ' ' + lastName;
-             acc.Email__c = email;
-             acc.Phone =Phone;
-             insert acc;
+//Profile Page Methods---------------------------------------------------------------------------------------------------------------
 
-             Contact con = new Contact();
-                con.AccountId = acc.Id;
-                con.FirstName = firstName;
-                con.LastName = lastName;
-                con.Email = email;
-                con.Phone =Phone;
-                insert con;
-            
-            
-            User user = new User();
-                user.Username = email;
-                user.ContactId = con.Id;
-                user.LastName = lastName;
-                user.FirstName = firstName;
-                user.Email = email;
-                user.Alias = 'U-' + String.valueOf(Crypto.getRandomInteger()).substring(0, 6);
-                user.CommunityNickname = email;
-                user.TimeZoneSidKey = 'GMT';
-                user.LocaleSidKey = 'en_US';
-                user.EmailEncodingKey = 'UTF-8';
-               Profile desiredProfile = [SELECT Id FROM Profile WHERE Name = 'Society Management System User' LIMIT 1];
-               user.ProfileId = desiredProfile.Id;
-                user.LanguageLocaleKey = 'en_US';
-                user.IsActive = true;
-            insert user;
-            System.setpassword(user.Id,Password);
-            site.login(user.Username,Password,'/sms/s');
-          
+    //Get Current User All Details
+   @AuraEnabled(Cacheable=True)
+    public static List<Account> getalluserDetails(){
+        String currentUserName = UserInfo.getUserName();
+        
+        List<Account> getlistofacc =[Select Id, Name, Email__c,ProfilePicture__c, Phone, Society__r.Name, Flat_NO__c,Flat_Type__c,Total_Flat_Members__c From Account Where Email__c =:currentUserName];
+        
+        return getlistofacc;
     }
+
     
     
     
-  
-      
     
-   
+ //Get All Current User Account Related Contacts
+  @AuraEnabled(Cacheable=True)
+  public static List<Contact> UserAccountRelatedContacts() {   
+ String currentUserName = UserInfo.getUserName(); 
+ List<Account> relatedcontact = [Select Id, Name, Email__c From Account Where Email__c =:currentUserName];        
+ List<Contact> accountrelatedcon = new List<Contact>();
+ if (!relatedcontact.isEmpty()) {
+    for (Account account : relatedcontact) {
+      List<Contact> contactsForAccount = [Select Id, AccountId, FirstName,LastName, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
+      accountrelatedcon.addAll(contactsForAccount);
+    }
    }
+   
+  return accountrelatedcon;
+ }
+    
+ // For Deleting Contact
+    @AuraEnabled
+   public static String deleteContact(String contactId) {
+    String useremail = UserInfo.getUserName();
+    List<Contact> conList = [SELECT Id, FirstName FROM Contact WHERE Id = :contactId AND Email = :useremail];
+    if (conList.size() > 0) {
+        delete conList;
+        return 'Contact deleted successfully.';
+    } else {
+        return 'Contact not found or you do not have the necessary permissions.';
+    }
+}
+
+ // For Insert Family Members
+    @AuraEnabled
+   public static String addFamilyMembers(String firstName, String lastName, String email, String phone) {
+    String emailOfCurrentUser = UserInfo.getUserName();
+    List<Account> accList = [SELECT Id, Email__c FROM Account WHERE Email__c = :emailOfCurrentUser LIMIT 1];
+    if (accList.size() > 0) {
+        Contact newContact = new Contact();
+        newContact.AccountId = accList[0].Id;
+        newContact.FirstName = firstName;
+        newContact.LastName = lastName;
+        newContact.Email = email;
+        newContact.Phone = phone;
+        insert newContact;
+        return 'Contact Created';
+    } else {
+        return 'Account not found for the current user.';
+    }
+}
+    
+    
+
+    
+}

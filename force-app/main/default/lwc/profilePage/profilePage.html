@@ -1,0 +1,69 @@
+<template>
+    <div class="container">
+
+        <div class="alldetails">
+            <!-- <p class="flatno"><b>{ShowfaltNo}</b></p> -->
+            <lightning-formatted-rich-text style="width: 20%;margin-top:70px; height:20%; border-radius: 10px;"
+                value={profilepic}></lightning-formatted-rich-text>
+            <p class="accname"><b>{ShowAccname}</b></p>
+            <p class="email"><b>{ShowEmail}</b></p>
+            <p class="phone"><b>{ShowPhone}</b></p>
+            <p class="society"><b>{ShowSociety}</b></p>
+            <!-- <p class="flatmember"><b>{ShowFlatemember}</b></p> -->
+            <!-- <p class="flattype"><b>{ShowFlattype}</b></p> -->
+        </div>
+
+
+
+
+        <lightning-button class="addnewuser" variant="brand" label="Add Family Members"
+            onclick={handleClickofAddFamilyMember}></lightning-button>
+
+        <lightning-card>
+            <lightning-datatable key-field="Id" data={contacts} columns={columns} onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </lightning-card>
+
+
+
+
+        <template if:true={trueaddfamilymember}>
+            <section role="dialog" tabindex="-1" aria-modal="true"
+                aria-label="Meaningful description of the modal content" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <!-- Your modal content goes here -->
+                        <div>
+                            <lightning-input type="text" label="First Name" value={firstName} required
+                                onchange={handleFirstNameChange}></lightning-input>
+
+                            <lightning-input type="text" label="Last Name" value={lastName} required
+                                onchange={handleLastNameChange}></lightning-input>
+
+                            <lightning-input type="email" label="Email" value={email} required
+                                onchange={handleEmailChange}></lightning-input>
+
+                            <lightning-input type="tel" maxlength="10" label="Phone" value={phone} required
+                                onchange={handlePhoneChange}></lightning-input>
+
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <div class="buttons">
+                            <lightning-button style="margin-right: 10px;" variant="brand" label="Add"
+                                onclick={handlesavebutton}></lightning-button>
+                            <lightning-button style="margin-left: 10px;" variant="brand" label="Cancel"
+                                onclick={handleClickofcancel}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+
+
+
+
+    </div>
+</template>
