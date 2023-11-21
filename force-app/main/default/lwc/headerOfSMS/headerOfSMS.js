@@ -1,26 +1,42 @@
 import { LightningElement, track } from 'lwc';
 import SocietyMSLogo from '@salesforce/resourceUrl/SocietyMS';
+import { NavigationMixin } from 'lightning/navigation';
 
-
-export default class HeaderOfSMS extends LightningElement {
+export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
 
     @track Societylogo = SocietyMSLogo;
     
-    @track EventPage;
-    @track ProfilePage;
+    @track EventPage = false;
+    @track ProfilePage = false;
+    @track utilityPage = false;
 
 
     HandleProfile() {
-        this.ProfilePage = true;
-        this.EventPage = false;
+
+        this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/profilepage"
+            }
+        });
     }
 
     HandleEvent() {
-        this.EventPage = true;
-        this.ProfilePage = false;
+      this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/"
+            }
+        });
     }
 
+    
     HandleUtility() {
-        
+          this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/utilitypage"
+            }
+        });
     }
 }

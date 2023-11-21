@@ -1,4 +1,4 @@
-import { LightningElement, track,wire } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.isCurrentUserSocietyEmpty';
 import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
 import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
@@ -12,8 +12,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class EventsPage extends LightningElement {
 
-    @track EventSPageTemplate = false;
-    @track ShowSocietySelectToNotRagisteredUser = false;
+    @track EventSPageTemplate = true;
+    @track ShowSocietySelectToNotRagisteredUser = true;
 
 
 
@@ -31,16 +31,13 @@ export default class EventsPage extends LightningElement {
 
     CheckCurrentUserSocietyField() {
     CheckCurrentUserSociety()
-        .then((result) => {
-        //this.ShowSocietySelectToNotRagisteredUser = false;
+        .then((result) => {    
         this.SocietyExistContact = result;
-       // console.log(this.SocietyExistContact);
+        console.log(this.SocietyExistContact);
         this.SocietyAlreadyexist();
-        
-        this.EventSPageTemplate = true;
-            
+        //this.ShowSocietySelectToNotRagisteredUser = false;
     }).catch((error) => {
-        //console.log(error.body.message);
+        console.log(error.body.message);
         if (error) {
          this.ShowSocietySelectToNotRagisteredUser = true;
         }

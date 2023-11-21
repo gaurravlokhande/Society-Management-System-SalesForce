@@ -53,7 +53,7 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                 this.ShowAccname = acc.Name;
                 this.ShowEmail = acc.Email__c;
                 this.ShowPhone = acc.Phone;
-                this.ShowSociety = acc.Society__r.Name;
+                // this.ShowSociety = acc.Society__c;
                 this.ShowFlattype = acc.Flat_Type__c;
                 this.ShowFlatemember = acc.Total_Flat_Members__c;
 
