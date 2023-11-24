@@ -101,7 +101,6 @@ public static String UpdateAccountSociety(String SocietyId) {
     }
     
     
-    // current user Register for events
    // current user Register for events
 @AuraEnabled
 public static String registerForEvent(String eventId) {
@@ -148,8 +147,11 @@ public static String registerForEvent(String eventId) {
   @AuraEnabled(Cacheable=True)
   public static List<Contact> UserAccountRelatedContacts() {   
  String currentUserName = UserInfo.getUserName(); 
- List<Account> relatedcontact = [Select Id, Name, Email__c From Account Where Email__c =:currentUserName];        
+      
+ List<Account> relatedcontact = [Select Id, Name, Email__c From Account Where Email__c =:currentUserName]; 
+      
  List<Contact> accountrelatedcon = new List<Contact>();
+      
  if (!relatedcontact.isEmpty()) {
     for (Account account : relatedcontact) {
       List<Contact> contactsForAccount = [Select Id, AccountId, FirstName,LastName, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
@@ -162,16 +164,23 @@ public static String registerForEvent(String eventId) {
     
  // For Deleting Contact
     @AuraEnabled
-   public static String deleteContact(String contactId) {
-    String useremail = UserInfo.getUserName();
-    List<Contact> conList = [SELECT Id, FirstName FROM Contact WHERE Id = :contactId AND Email = :useremail];
-    if (conList.size() > 0) {
-        delete conList;
-        return 'Contact deleted successfully.';
-    } else {
-        return 'Contact not found or you do not have the necessary permissions.';
+    public static String deleteContact(String contactId) {
+        try {
+            String currentUserName = UserInfo.getUserName();
+            List<Contact> conList = [SELECT Id, FirstName, Email FROM Contact WHERE Id = :contactId AND Email != :currentUserName];
+
+            if (conList.size() > 0) {
+                delete conList;
+                return 'Contact deleted successfully.';
+            } else {
+                return 'You canot Delete yourself, try to contact Admin';
+            }
+        } catch (Exception e) {
+            return 'An error occurred while deleting the contact.';
+        }
     }
-}
+
+
 
  // For Insert Family Members
     @AuraEnabled
@@ -193,6 +202,44 @@ public static String registerForEvent(String eventId) {
 }
     
     
+// Utility -----------------------------------------
+
+    // for fetching data of utility payment of current user
+    @AuraEnabled
+    public static List<Utility_Payment__c>  getutilitybill(){
+            String useremail = UserInfo.getUserName();
+        List<Account> accList = [Select Id, Name FROM Account Where Email__c =:useremail];
+        
+        List<Utility_Payment__c> getcurreuntuserinvoice = [Select Name,	Flat__r.Name, Amount__c,Utility_Provider__r.Name,Status__c,Created_Date__c,Due_Date__c From Utility_Payment__c where Flat__c =:accList[0].Id];
+        
+        return getcurreuntuserinvoice;
+    }
+ 
+    
+    
+     // for paid bill status of current user
+ @AuraEnabled
+public static String changeUtilityStatus(String rowId) {
+    String currentUserName = UserInfo.getUserName();
+
+     List<Account> accList = [SELECT Id, Name, Email__c FROM Account WHERE Email__c = :currentUserName];
+
+     List<Utility_Payment__c> utiList = [SELECT Id, Flat__c, Amount__c,Status__c
+                                        FROM Utility_Payment__c WHERE Flat__c = :accList[0].Id AND Id =:rowId];
+
+    if(utiList!=null){
+     for (Utility_Payment__c utility : utiList) {
+         if (utility.Status__c == 'Unpaid') {
+             utility.Status__c = 'Paid';
+             update utiList;
+            return 'Bill paid Successfully';
+         }
+     }
+    }
+ return 'Bill Already Paid';
+     
+}
+  
 
     
 }
