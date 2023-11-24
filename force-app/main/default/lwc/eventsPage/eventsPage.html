@@ -52,25 +52,54 @@
                         <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
                             class="slds-modal slds-fade-in-open"
                             style="width: 400px; height: 300px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <div class="slds-modal__container">
-                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                                    <lightning-input type="checkbox" label="Are you sure you want to register"
-                                        checked={CheckboxValue} onchange={oncheckboxchange}></lightning-input>
+
+                            <lightning-modal-body>
+
+
+                                <div class="datatable">
+                                    <lightning-datatable key-field="id" data={Storealluserdetail} columns={columns}
+                                        onrowselection={onselectionlofdatatablerow}></lightning-datatable>
                                 </div>
-                                <div class="slds-modal__footer slds-modal__footer_directional">
-                                    <button class="slds-button slds-button_neutral"
-                                        onclick={handleNoofUserRegistration}>No</button>
+                                <lightning-input style="margin-top: 10px; margin-left:10px" type="checkbox"
+                                    label="Are you sure you want to register" checked={CheckboxValue}
+                                    onchange={oncheckboxchange}></lightning-input>
+
+                                <div class="buttonsyesno">
                                     <button class="slds-button slds-button_brand"
                                         onclick={handleYESfUserRegistration}>Yes</button>
+                                    <button class="slds-button slds-button_brand"
+                                        onclick={handleNoofUserRegistration}>No</button>
                                 </div>
-                            </div>
+
+                            </lightning-modal-body>
                         </section>
                         <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
                     </template>
+
+
                 </div>
             </template>
         </div>
     </template>
+
+
+
+    <!-- Show all current user contacts/ family members for register for event
+    <template if:true={ShowallFamilymembersForRegister}>
+
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open"
+            style="width: 400px; height: 300px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+
+            <lightning-modal-body>
+                <lightning-datatable key-field="id" data={Storealluserdetail} columns={columns}
+                    onrowaction={onregisterfamilymember}></lightning-datatable>
+            </lightning-modal-body>
+
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+
+    </template> -->
 
 
     <!-- Select Society For New User -->

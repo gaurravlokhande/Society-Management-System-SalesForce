@@ -3,18 +3,24 @@ import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.is
 import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
 import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
 import checkUserRegistrationForEvent from '@salesforce/apex/SocietyManagementSystem.checkUserRegistrationForEvent';
-import registerForEvent from '@salesforce/apex/SocietyManagementSystem.registerForEvent';
+import registerForEvent from '@salesforce/apex/SocietyManagementSystem.RegisterContactForEvents';
+import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem.UserAccountRelatedContactsforevents';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
+
+const columns = [
+    { label: 'Name', fieldName: 'Name' }
+];
 
 export default class EventsPage extends LightningElement {
 
     @track EventSPageTemplate = true;
     @track ShowSocietySelectToNotRagisteredUser = false;
+    @track CurrentUserRegistrationTemplate = false;
 
 
-
+    columns = columns;
 
 
    
@@ -34,7 +40,7 @@ export default class EventsPage extends LightningElement {
                    this.ShowSocietySelectToNotRagisteredUser = true;
             } else {
                 this.SocietyExistContact = result;
-               console.log(this.SocietyExistContact);
+              // console.log(this.SocietyExistContact);
                this.SocietyAlreadyexist();
             }
         
@@ -101,9 +107,10 @@ export default class EventsPage extends LightningElement {
 
 
 
-     handleClickOfRegistrationButton(event) {
+    handleClickOfRegistrationButton(event) {
+        this.fetchallcontactsdetails();
          this.Storeeventid = event.target.dataset.recordid;
-         console.log(this.Storeeventid)
+        // console.log('eventid'+this.Storeeventid)
            checkUserRegistrationForEvent({eventId:this.Storeeventid})
             .then((result)=>{
                 if(result=='Already Registered'){
@@ -120,34 +127,28 @@ export default class EventsPage extends LightningElement {
     }
 
     
-     handleYESfUserRegistration() {
-                if(this.CheckboxValue === false){
-               
-                    this.dispatchEvent(new ShowToastEvent({
-                        message: "Please Select The Checkbox",
-                        variant: "warning"
-                    }));
-                } else{
-                    registerForEvent({eventId: this.Storeeventid })
-                    .then(result => {
-                        //alert(result)
-                        this.dispatchEvent(new ShowToastEvent({
-                            message: result ,
-                            variant: "success"
-                        }));
-                        this.CurrentUserRegistrationTemplate = false;
-                    })
-                        .catch(error => {
-                        this.dispatchEvent(new ShowToastEvent({
-                            message: error.body.message,
-                            variant: "error"
-                        }));
-                       // console.error('Error registering for the event:', error.body.message);
-                    });
-                }     
+    handleYESfUserRegistration(event) {
+         if(this.CheckboxValue == false){      
+             alert('check the checkbox value')  
+         } else {
+             this.registerforeventscon();
+         }     
      }
     
     
+    registerforeventscon() {
+        registerForEvent({ EventId: this.Storeeventid, ContactId: this.Storeidforregisteraion })
+             .then((result) => {
+                 alert(JSON.stringify(result))
+                 this.CurrentUserRegistrationTemplate = false;
+             }).catch((error) => {
+                alert(JSON.stringify(error))
+             });
+    }
+
+
+    @track CheckboxValue=false;
+
     oncheckboxchange(event) {
     this.CheckboxValue = event.target.checked;
      }
@@ -157,6 +158,43 @@ export default class EventsPage extends LightningElement {
         this.CurrentUserRegistrationTemplate = false;
         
      }
+
+    
+   
+
+    // register family members functionality
+    @track rowid;
+    @track action;
+    @track Storealluserdetail = [];
+
+
+
+    @track Storeidforregisteraion;
+
+    onselectionlofdatatablerow(event) {   
+        var selectedRecords = event.detail.selectedRows;
+        for (let i = 0; i < selectedRecords.length; i++) {
+            const selectedrecords = selectedRecords[i].Id;  
+            this.Storeidforregisteraion = selectedrecords;
+        }
+       
+    }
+
+
+     fetchallcontactsdetails() {
+        UserAccountRelatedContacts()
+        .then((result) => {
+            this.Storealluserdetail = result;
+        }).catch((error) => {
+            
+        });
+     }
+    
+    
+  
+
+
+   
 
 
 

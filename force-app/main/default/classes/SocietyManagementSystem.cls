@@ -124,13 +124,67 @@ public static String registerForEvent(String eventId) {
 
     return 'User Not Registered';
 }
+    
+    
+    
+    //fetch data of current user contact for register
+  @AuraEnabled(Cacheable=True)
+  public static List<Contact> UserAccountRelatedContactsforevents() {   
+ String currentUserName = UserInfo.getUserName(); 
+      
+ List<Account> relatedcontact = [Select Id, Name, Email__c From Account Where Email__c =:currentUserName]; 
+      
+ List<Contact> accountrelatedcon = new List<Contact>();
+      
+ if (!relatedcontact.isEmpty()) {
+    for (Account account : relatedcontact) {
+      List<Contact> contactsForAccount = [Select Id, AccountId,Name, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
+      accountrelatedcon.addAll(contactsForAccount);
+    }
+   }
+   
+  return accountrelatedcon;
+ }
+    
+    
+   
+    
+    // register contacts for events
+@AuraEnabled
+public static String RegisterContactForEvents(String EventId, String ContactId) {
+    List<Event_Registration__c> existingRegistrations = [SELECT Id FROM Event_Registration__c WHERE Event__c = :EventId AND Resident__c = :ContactId];
+    List<Contact> contactInfo = [SELECT Id, Email FROM Contact WHERE Id = :ContactId];
+    
+    if (!existingRegistrations.isEmpty()) {
+        return 'User already registered for this event';
+    } else {      
+        if (!contactInfo.isEmpty()) {
+            for(Contact con : contactInfo) {
+                Event_Registration__c newRegistration = new Event_Registration__c();
+                newRegistration.Email__c = con.Email;
+                newRegistration.Event__c = EventId;
+                newRegistration.Resident__c = ContactId;
+                insert newRegistration;
+            }
+            return 'User registered successfully'; 
+        } else {
+            return 'Contact not found';
+        }  
+    }
+}
+
+
+    
+    
+    
+    
 //EVENT PAGE METHODS---------------------------------------------------------------------------------------------------------------
 
     
 //Profile Page Methods---------------------------------------------------------------------------------------------------------------
 
     //Get Current User All Details
-   @AuraEnabled(Cacheable=True)
+   @AuraEnabled
     public static List<Account> getalluserDetails(){
         String currentUserName = UserInfo.getUserName();
         
@@ -240,6 +294,8 @@ public static String changeUtilityStatus(String rowId) {
      
 }
   
+    
+    
 
     
 }
