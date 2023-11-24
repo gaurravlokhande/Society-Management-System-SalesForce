@@ -39,4 +39,13 @@ export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
             }
         });
     }
+
+    HandleMaintenanceRequests() {
+         this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/maintenancerequests"
+            }
+        });
+    }
 }

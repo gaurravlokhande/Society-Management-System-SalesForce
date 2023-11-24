@@ -7,13 +7,11 @@ import registerForEvent from '@salesforce/apex/SocietyManagementSystem.registerF
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
-//import makeRegisterbuttonhide from '@salesforce/apex/SocietyManagementSystem.makeRegisterbuttonhide';
-
 
 export default class EventsPage extends LightningElement {
 
     @track EventSPageTemplate = true;
-    @track ShowSocietySelectToNotRagisteredUser = true;
+    @track ShowSocietySelectToNotRagisteredUser = false;
 
 
 
@@ -32,10 +30,14 @@ export default class EventsPage extends LightningElement {
     CheckCurrentUserSocietyField() {
     CheckCurrentUserSociety()
         .then((result) => {    
-        this.SocietyExistContact = result;
-        console.log(this.SocietyExistContact);
-        this.SocietyAlreadyexist();
-        //this.ShowSocietySelectToNotRagisteredUser = false;
+            if (result==='False') {
+                   this.ShowSocietySelectToNotRagisteredUser = true;
+            } else {
+                this.SocietyExistContact = result;
+               console.log(this.SocietyExistContact);
+               this.SocietyAlreadyexist();
+            }
+        
     }).catch((error) => {
         console.log(error.body.message);
         if (error) {
@@ -54,7 +56,6 @@ export default class EventsPage extends LightningElement {
         this.SocietyAlreadyexist();
         this.UpdateSocietyOnContact();
         this.ShowSocietySelectToNotRagisteredUser = false;
-        this.EventSPageTemplate = true;
     }
 
 
@@ -119,18 +120,29 @@ export default class EventsPage extends LightningElement {
     }
 
     
-
      handleYESfUserRegistration() {
-                if(this.CheckboxValue == false){
-                   alert('Checkbox not selected');
+                if(this.CheckboxValue === false){
+               
+                    this.dispatchEvent(new ShowToastEvent({
+                        message: "Please Select The Checkbox",
+                        variant: "warning"
+                    }));
                 } else{
                     registerForEvent({eventId: this.Storeeventid })
                     .then(result => {
-                        alert(result)
+                        //alert(result)
+                        this.dispatchEvent(new ShowToastEvent({
+                            message: result ,
+                            variant: "success"
+                        }));
                         this.CurrentUserRegistrationTemplate = false;
                     })
-                    .catch(error => {
-                        console.error('Error registering for the event:', error.body.message);
+                        .catch(error => {
+                        this.dispatchEvent(new ShowToastEvent({
+                            message: error.body.message,
+                            variant: "error"
+                        }));
+                       // console.error('Error registering for the event:', error.body.message);
                     });
                 }     
      }

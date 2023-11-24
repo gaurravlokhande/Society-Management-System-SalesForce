@@ -52,6 +52,7 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
             })
                 .then(result => {
 
+                    console.log(result);
                     this[NavigationMixin.Navigate]({
                         type: "standard__webPage",
                         attributes: {

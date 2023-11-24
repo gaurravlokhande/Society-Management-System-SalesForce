@@ -1,64 +1,92 @@
 import { LightningElement, track } from 'lwc';
 import getutilitybill from '@salesforce/apex/SocietyManagementSystem.getutilitybill';
-import MarkasPaid from '@salesforce/apex/SocietyManagementSystem.MarkasPaid';
+import markaspaid from '@salesforce/apex/SocietyManagementSystem.changeUtilityStatus';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class UtilityPage extends LightningElement {
 
-    connectedCallback() {
-        this.fetchutilitybill();
+const columns = [
+    { label: 'Invoice No', fieldName: 'Name', initialWidth: 100 },
+    { label: 'Amount', fieldName: 'Amount__c', initialWidth: 100},
+    { label: 'Status', fieldName: 'Status__c' , initialWidth: 100},
+    { label: 'Account Name', fieldName: 'Accountname', initialWidth: 150 },
+    { label: 'Utility Provider Name', fieldName: 'UtilityProviderName', initialWidth: 150 },
+    { label: 'Created DateTime', fieldName: 'Created_Date__c', initialWidth: 200 },
+    { label: 'Due DateTime', fieldName: 'Due_Date__c' , initialWidth: 200},
+    {
+        type: "button", initialWidth: 160, typeAttributes: {
+            label: 'Mark As paid',
+            disabled: false,
+            value: 'view',
+            iconPosition: 'left',
+           // iconName:'utility:preview',
+            variant:'Brand'
+        }
     }
+];
 
-    @track utilitybillsTemplate = true;
+
+
+export default class UtilityPage extends LightningElement {
+    columns = columns;
+    
+    connectedCallback() {
+        this.fetchUtilityBill();
+    }
 
 
     @track Storebilldata = [];
 
-    @track name;
-    @track accname;
-    @track status;
-    @track utilityprovider;
-    @track amount;
 
     
-    fetchutilitybill() {
-        getutilitybill()
-        .then((result) => {
-            this.Storebilldata = result.forEach(bill => {
-                this.name = bill.Name;
-                this.accname = bill.Account__r.Name;
-                this.status = bill.Status__c;
-                this.utilityprovider = bill.Utility_Provider__r.Name;
-                this.amount = bill.Amount__c;
-                 this.refreshData();
-            });   
-           // console.log(result);
-        }).catch((error) => {
-             console.log(error)
+  fetchUtilityBill() {
+    getutilitybill()
+        .then(result => {
+            // console.log(result);
+            
+            this.Storebilldata = result.map(item => ({
+                ...item,
+                Accountname: item.Flat__r.Name,
+                UtilityProviderName: item.Utility_Provider__r.Name,
+            }));
+
+        })
+        .catch(error => {
+            console.error("Error fetching utility bill:", error);
         });
-    }
-   
+}
 
 
-    onclickofmarkaspaid() {
-        MarkasPaid()
+    @track rowid;
+    @track action;
+    
+    callRowAction(event) {
+     const action = event.detail.action.label;
+     this.rowid = event.detail.row.Id;
+        console.log(this.rowid)
+        
+    switch (action) {
+        case 'Mark As paid':
+            markaspaid({ rowId: this.rowid })
             .then((result) => {
-                this.fetchutilitybill();
-            this.dispatchEvent(new ShowToastEvent({
-                message: result,
-                variant: "success"
-            }));
-        }).catch((error) => {
-            this.dispatchEvent(new ShowToastEvent({
-                message: error.body.message,
-                variant: "error"
-            }));
-        });
-    }
+                this.fetchUtilityBill();
+                this.dispatchEvent(new ShowToastEvent({
+                    message: result,
+                    variant: "success"
+                }));
+            }).catch((error) => {
+                this.dispatchEvent(new ShowToastEvent({
+                    message:error.body.message ,
+                    variant: "error"
+                }));
+            });
+            break;
     
-
-    refreshData() {
-    return refreshApex(this.Storebilldata);
+        default:
+            alert('Bill Already Paid');
+            break;
+     }
     }
+
+   
     
 }

@@ -2,6 +2,7 @@ import { LightningElement, track, wire } from 'lwc';
 import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem.UserAccountRelatedContacts';
 import getalluserDetails from '@salesforce/apex/SocietyManagementSystem.getalluserDetails';
 import addFamilyMembers from '@salesforce/apex/SocietyManagementSystem.addFamilyMembers';
+import deletecontact from '@salesforce/apex/SocietyManagementSystem.deleteContact';
 import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -53,7 +54,7 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                 this.ShowAccname = acc.Name;
                 this.ShowEmail = acc.Email__c;
                 this.ShowPhone = acc.Phone;
-                // this.ShowSociety = acc.Society__c;
+                this.ShowSociety = acc.Society__r.Name;
                 this.ShowFlattype = acc.Flat_Type__c;
                 this.ShowFlatemember = acc.Total_Flat_Members__c;
 
@@ -63,20 +64,6 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
             alert(error);
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -110,7 +97,6 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                     attributes: {
                         actionName: "edit",
                         recordId: ContactId,
-                        objectApiName: "The API name of the record’s object. Optional for lookups."
                     }
                 });
                 break;
@@ -122,12 +108,15 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                         message: result,
                         variant: "success"
                     }));
+                        return refreshApex(this.wireResult);
                     }).catch((error) => {
+                        
                     this.dispatchEvent(new ShowToastEvent({
                         message: error.body.message,
                         variant: "error"
                     }));
                     });
+                
                 break;
             case 'view':
                  this[NavigationMixin.Navigate]({
@@ -135,7 +124,6 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                     attributes: {
                         actionName: "view",
                         recordId: ContactId,
-                        objectApiName: "The API name of the record’s object. Optional for lookups."
                     }
                 });
                 break;
