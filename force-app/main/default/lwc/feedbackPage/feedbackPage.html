@@ -1,0 +1,18 @@
+<template>
+    <lightning-card>
+
+
+
+        <lightning-input class="Subject" type="text" label="Enter Subject" value={subject}
+            onchange={Handelsubjectchange}></lightning-input>
+
+
+        <lightning-textarea class="textarea" max-length="1000" label="Feedback"
+            placeholder="Enter your feedback here..." value={description} onchange={handelfeedbackchande}
+            variant="standard"></lightning-textarea>
+
+
+        <lightning-button class="submitbtn" variant="brand" label="Submit"
+            onclick={handleClickofSubmit}></lightning-button>
+    </lightning-card>
+</template>

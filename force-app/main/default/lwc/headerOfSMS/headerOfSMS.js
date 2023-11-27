@@ -48,4 +48,13 @@ export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
             }
         });
     }
+
+    HandleFeedback() {
+         this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/feedbackpage"
+            }
+        });
+    }
 }

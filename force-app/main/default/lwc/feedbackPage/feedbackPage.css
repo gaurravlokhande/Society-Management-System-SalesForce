@@ -1,0 +1,13 @@
+.submitbtn{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.textarea{
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.Subject{
+margin-left: 30px;
+    margin-right: 30px;
+}

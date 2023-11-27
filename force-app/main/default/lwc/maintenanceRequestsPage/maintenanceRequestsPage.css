@@ -1,0 +1,11 @@
+.maintreq{
+    display: flex;
+    justify-content: right;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.msubmit{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}

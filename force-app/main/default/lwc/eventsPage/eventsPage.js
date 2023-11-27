@@ -6,14 +6,14 @@ import checkUserRegistrationForEvent from '@salesforce/apex/SocietyManagementSys
 import registerForEvent from '@salesforce/apex/SocietyManagementSystem.RegisterContactForEvents';
 import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem.UserAccountRelatedContactsforevents';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import { NavigationMixin } from 'lightning/navigation';
 
 
 const columns = [
     { label: 'Name', fieldName: 'Name' }
 ];
 
-export default class EventsPage extends LightningElement {
+export default class EventsPage extends  NavigationMixin(LightningElement) {
 
     @track EventSPageTemplate = true;
     @track ShowSocietySelectToNotRagisteredUser = false;
@@ -141,6 +141,7 @@ export default class EventsPage extends LightningElement {
              .then((result) => {
                  alert(JSON.stringify(result))
                  this.CurrentUserRegistrationTemplate = false;
+                 this.CheckboxValue = false;
              }).catch((error) => {
                 alert(JSON.stringify(error))
              });
@@ -193,9 +194,14 @@ export default class EventsPage extends LightningElement {
     
   
 
-
-   
-
+    onclickofsociety() {
+        this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/societyallmembers"
+            }
+        });
+    }
 
 
 }

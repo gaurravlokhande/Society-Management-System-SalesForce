@@ -125,3 +125,6 @@
 .datatable{
     margin-top: 10px;
 }
+.society :hover{
+    background-color: gray;
+}

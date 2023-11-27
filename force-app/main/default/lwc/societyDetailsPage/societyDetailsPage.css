@@ -1,0 +1,21 @@
+.societydetails{
+    
+    margin-top: 30px;
+    font-size: 100%;
+}
+
+.main{
+    display: flex;
+    justify-content: space-between;
+}
+.button{
+    display: flex;
+    flex-direction: column;
+}
+.staff{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.tablemembers{
+    margin-top: 20px;
+}
