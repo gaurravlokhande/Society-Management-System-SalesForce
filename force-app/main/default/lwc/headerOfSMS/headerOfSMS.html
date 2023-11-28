@@ -1,18 +1,21 @@
 <template>
-    <div class="wholecontainer">
-        <div class="alloptions">
+
+    <nav>
+        <p onclick={HandleProfile}><a class="menu-item">My Profile</a></p>
+        <p onclick={HandleEvent}><a class="menu-item">Events</a></p>
+        <p onclick={HandleUtility}><a class="menu-item">Utilities</a></p>
+        <p onclick={HandleMaintenanceRequests}><a class="menu-item">Maintenance Requests</a></p>
+        <p onclick={HandleFeedaack}><a class="menu-item">Feedback</a></p>
+
+
+        <div class="rightSection">
+
             <div class="imgdiv">
-                <img style="height: 50px; display:flex; justify-content:left; " src={Societylogo} alt="Society Logo">
+                <img style="height: 50px; display: flex; justify-content: left;" src={Societylogo} alt="Society Logo">
             </div>
-            <div class="icondiv">
-                <p onclick={HandleFeedback} style="margin-right: 25px;"><b>Feedback</b></p>
-                <p onclick={HandleMaintenanceRequests} style="margin-right: 25px;"><b>Maintenance Requests</b></p>
-                <p onclick={HandleUtility} style="margin-right: 25px;"><b>UTILITY</b></p>
-                <p onclick={HandleEvent} style="margin-right: 20px;"><b>EVENT</b></p>
-                <p onclick={HandleProfile} style="margin-right: 15px;"><b>PROFILE</b></p>
 
-
-            </div>
         </div>
-    </div>
+    </nav>
+
+
 </template>

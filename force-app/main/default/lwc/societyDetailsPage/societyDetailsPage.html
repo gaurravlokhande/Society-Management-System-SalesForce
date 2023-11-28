@@ -1,19 +1,14 @@
 <template>
 
+
     <div class="main">
         <template if:true={Storedata} for:each={Storedata} for:item="soc" for:index="index">
-            <div key={soc.Id}>
+            <div key={soc.Id} class="society-info-container">
                 <div class="slds-text-heading_large">
                     <p><b>Society Name:</b> {soc.Name}</p>
-
-
                     <p><b>City:</b> {soc.City__c}</p>
-
                     <p><b>Society Type:</b> {soc.Society_Type__c}</p>
-
-
                     <p><b>Address:</b> {soc.Address__c}</p>
-
                     <p><b>Total No Of Flats:</b> {soc.Total_no_of_flats__c}</p>
                 </div>
             </div>
@@ -23,11 +18,9 @@
             <lightning-button variant="base" label="Show All Society Members" onclick={handleClickshowallfamilymembers}
                 ondblclick={handleClickshowallfamily}></lightning-button>
 
-
-            <lightning-button class="staff" variant="base" label="ShowAllSocietyStaff"
+            <lightning-button class="staff" variant="base" label="Show All Society Staff"
                 onclick={handleClickofshowallsocietystaff} ondblclick={handleClickshowallstaff}></lightning-button>
         </div>
-
     </div>
 
 
@@ -50,13 +43,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template if:true={storeallsocietymembers} for:each={storeallsocietymembers} for:item="socstaff"
+                        <template if:true={storeallsocietymembers} for:each={storeallsocietymembers} for:item="socmem"
                             for:index="index">
-                            <tr key={socstaff.Id} class="slds-hint-parent">
-                                <th scope="row"> {socstaff.Flat_No__c} </th>
-                                <th scope="row"> {socstaff.Name} </th>
-                                <th scope="row"> {socstaff.Email__c} </th>
-                                <th scope="row"> {socstaff.Phone} </th>
+                            <tr key={socmem.Id} class="slds-hint-parent">
+                                <th scope="row"> {socmem.Flat_No__c} </th>
+                                <th scope="row" data-recordid={socmem.Id} onclick={onclicknameofsocmem}>{socmem.Name}
+                                </th>
+                                <th scope="row"> {socmem.Email__c} </th>
+                                <th scope="row"> {socmem.Phone} </th>
                             </tr>
                         </template>
                     </tbody>
@@ -85,7 +79,8 @@
                         <template if:true={storestaffdata} for:each={storestaffdata} for:item="socstaff"
                             for:index="index">
                             <tr key={socstaff.Id} class="slds-hint-parent">
-                                <th scope="row"> {socstaff.Name} </th>
+                                <th scope="row" data-recordid={socstaff.Id} onclick={onclicknameofsocstaff}>
+                                    {socstaff.Name} </th>
                                 <th scope="row"> {socstaff.Email__c} </th>
                                 <th scope="row"> {socstaff.Phone__c} </th>
                                 <th scope="row"> {socstaff.Society__r.Name} </th>

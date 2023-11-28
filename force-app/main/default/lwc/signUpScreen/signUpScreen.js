@@ -51,9 +51,8 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
                 Password: this.password
             })
                 .then(result => {
-
-
-                    this.dispatchEvent(new ShowToastEvent({
+                    if (result ==='user created successfully') {
+                          this.dispatchEvent(new ShowToastEvent({
                         message: "You have been registered successfully",
                         variant: "success"
                     }));
@@ -65,6 +64,13 @@ export default class SignUpScreen extends NavigationMixin (LightningElement) {
                            url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/login"
                         }
                     });
+                    } else {
+                        this.dispatchEvent(new ShowToastEvent({
+                            title: "title",
+                            message: result,
+                            variant: "error"
+                        }));
+                    } 
                     
                 })
                 .catch(error => {
