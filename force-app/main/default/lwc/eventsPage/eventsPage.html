@@ -1,7 +1,9 @@
 <template>
     <template if:true={EventSPageTemplate}>
         <div class="event-container">
-            <h1 class="upcoming-events"><b>Upcoming Events</b></h1>
+            <h1 class="upcoming-events"><b>Upcoming Events of {storesociety}</b></h1>
+
+
 
             <!-- Events Data template -->
             <template if:true={StoreEventData} for:each={StoreEventData} for:item="event" for:index="index">

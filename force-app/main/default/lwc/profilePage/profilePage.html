@@ -7,9 +7,9 @@
                 value={profilepic}></lightning-formatted-rich-text>
 
             <p class="accname"><b>{ShowAccname}</b></p>
-            <p class="email"><b>{ShowEmail}</b></p>
-            <p class="phone"><b>{ShowPhone}</b></p>
             <p class="society"><b>{ShowSociety}</b></p>
+            <p class="email"><b>{ShowEmail}</b></p>
+            <p class="phone"><b>+91 {ShowPhone}</b></p>
             <p class="flatmember"><b>{ShowFlatemember}</b></p>
             <p class="flattype"><b>{ShowFlattype}</b></p>
         </div>
@@ -19,12 +19,12 @@
 
 
 
-        <lightning-card title="Family Members">
-            <lightning-button class="addnewuser" variant="base" label="Add Family Members"
+        <div class="familymem" title="Family Members">
+            <lightning-button class="addnewuser" variant="brand" label="Add Family Members"
                 onclick={handleClickofAddFamilyMember}></lightning-button>
             <lightning-datatable key-field="Id" data={contacts} columns={columns} onrowaction={handleRowAction}>
             </lightning-datatable>
-        </lightning-card>
+        </div>
 
 
 

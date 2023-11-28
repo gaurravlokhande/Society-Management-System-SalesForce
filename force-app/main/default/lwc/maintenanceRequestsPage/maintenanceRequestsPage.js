@@ -72,6 +72,7 @@ export default class MaintenanceRequestsPage extends LightningElement {
                 message: result,
                 variant: "success"
             }));
+                this.clearallfields();
             }).catch((error) => {
                 console.log(error.body.message);
             this.dispatchEvent(new ShowToastEvent({
@@ -83,5 +84,8 @@ export default class MaintenanceRequestsPage extends LightningElement {
     }
 
 
+    clearallfields() {
+        this.targettextareavalue = false;
+    }
 
 }

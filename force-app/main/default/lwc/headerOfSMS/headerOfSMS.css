@@ -4,7 +4,7 @@
 
   nav {
       overflow: hidden;
-      background-color: #f4f6f9;
+      background-color: #17252A;
       padding: 10px;
   }
 
@@ -12,7 +12,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       font-weight: bold;
       float: left;
-      color: black;
+      color: #FEFFFF;
       text-align: center;
       padding: 12px;
       text-decoration: none;
@@ -31,13 +31,9 @@
       color: rgb(42, 10, 94);
   }
 
-  .selected {
-      background-color: dodgerblue;
-      color: white;
-  }
-
   .rightSection {
       float: right;
   }
+ 
 
   

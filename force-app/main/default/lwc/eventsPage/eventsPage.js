@@ -69,13 +69,15 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
 
 
     @track StoreEventData = [];
+    @track storesociety = '';
 
     SocietyAlreadyexist() {
         SearchEventsForAlreadyRagstered({ AlreadyRagistered:this.SocietyExistContact })
         .then((result) => {
-            
+        
                 let arr = JSON.parse(JSON.stringify(result));
-                arr.forEach((item) => {
+            arr.forEach((item) => {
+                this.storesociety = item.Society__r.Name;
                     if (item.Eligibility__c == 'Registration Required') {
                         item["Registrationrequired"] = true;
                     } else {

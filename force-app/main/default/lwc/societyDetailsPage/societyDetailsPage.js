@@ -2,6 +2,7 @@ import { LightningElement, track } from 'lwc';
 import getinfoofsociety from '@salesforce/apex/SocietyManagementSystem.getinfoofsociety';
 import showallsocietymembers from '@salesforce/apex/SocietyManagementSystem.showallsocietymembers';
 import showallsocietystaff from '@salesforce/apex/SocietyManagementSystem.showallsocietystaff';
+import showsocietyamenity from '@salesforce/apex/SocietyManagementSystem.showsocietyamenity';
 import { NavigationMixin } from 'lightning/navigation';
 export default class SocietyDetailsPage extends NavigationMixin(LightningElement) {
 
@@ -93,5 +94,31 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
     handleClickshowallstaff() {
         this.showallsocietystaff = false;
     }
+
+
+
+    @track showsocietyAminitysTemplate = false;
+
+
+
+    ondoubleclicksocietyaminity() {
+         this.showsocietyAminitysTemplate = false;
+    }
+
+
+    @track storesocietyaminity = [];
+
+    handleseesocietyaminity() {
+        this.showsocietyAminitysTemplate = true;
+
+        showsocietyamenity()
+        .then((result) => {
+            this.storesocietyaminity = result;
+        }).catch((error) => {
+            
+        });
+    }
+
+
 
 }

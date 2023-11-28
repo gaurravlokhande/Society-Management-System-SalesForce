@@ -1,7 +1,9 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track ,api,wire} from 'lwc';
 import SocietyMSLogo from '@salesforce/resourceUrl/SocietyMS';
 import { NavigationMixin } from 'lightning/navigation';
 //import Devicetype from '@salesforce/client/formFactor';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 
 
 export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
@@ -81,4 +83,11 @@ export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
             }
         });
     }
+
+
+
+
+
+       
+
 }

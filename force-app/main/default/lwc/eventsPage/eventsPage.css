@@ -1,15 +1,15 @@
 .upcoming-events {
-    background-color: rgb(236, 243, 240);
+    background-color: #DEF2F1;
     padding-top: 17px;
     padding-bottom: 17px;
-    font-size: larger;
+    font-size: x-large;
     display: flex;
     justify-content: center;
-    font-family: cursive;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 5px 5px 5px rgb(73, 74, 74);
-    border-radius: 10px 100px / 120px;
+    /* border-radius: 10px 100px / 120px;
     margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 5px; */
     border: 1px solid rgb(15, 15, 15);
 
 }
@@ -18,7 +18,7 @@
    margin-top: 10px;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgb(236, 243, 240);
+    background-color:#3AAFA9;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -32,12 +32,12 @@
 .Container {
     margin-top: 20px;
     border: 1px solid rgb(15, 15, 15);
-    box-shadow: 5px 5px 5px rgb(236, 243, 240);
+    box-shadow: 5px 5px 5px rgb(#3AAFA9);
     border-radius: 7px;
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
-    background-color: rgb(236, 243, 240);
+    background-color:#DEF2F1;
     box-shadow: 5px 5px 5px rgb(73, 74, 74);
 }
 
@@ -88,14 +88,15 @@
 
 .allInformation {
     margin-top: 10px;
-    font-family: Georgia, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
-    font-size: medium;
+    font-size: small;
     margin-left: 10px;
 
 }
+
 
 .register-buttons {
     display: flex;
@@ -103,14 +104,6 @@
     margin-bottom: 10px;
 }
 
-
-/* 
-.modal-dialog {
-    display: flex;
-    justify-content: center;
-    width: 400px;
-    height: 300px;
-} */
 
 .SaceButton {
     margin-top: 12px;
@@ -126,5 +119,5 @@
     margin-top: 10px;
 }
 .society :hover{
-    background-color: gray;
+    background-color: black;
 }
