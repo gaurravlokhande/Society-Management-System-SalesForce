@@ -25,7 +25,7 @@
 
 
             <lightning-button class="staff" variant="base" label="ShowAllSocietyStaff"
-                onclick={handleClickofshowallsocietystaff}></lightning-button>
+                onclick={handleClickofshowallsocietystaff} ondblclick={handleClickshowallstaff}></lightning-button>
         </div>
 
     </div>
@@ -34,60 +34,67 @@
 
 
 
-
     <template if:true={showallsocietymembers}>
-        <div class="tablemembers">
+        <lightning-card title="All Society Members Information">
 
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead>
-                    <tr class="slds-line-height_reset">
-                        <th scope="col">Flat No </th>
-                        <th scope="col"> Name </th>
-                        <th scope="col"> Email </th>
-                        <th scope="col"> Phone </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template if:true={storeallsocietymembers} for:each={storeallsocietymembers} for:item="socstaff"
-                        for:index="index">
-                        <tr key={socstaff.Id} class="slds-hint-parent">
-                            <th scope="row"> {socstaff.Flat_No__c} </th>
-                            <th scope="row"> {socstaff.Name} </th>
-                            <th scope="row"> {socstaff.Email__c} </th>
-                            <th scope="row"> {socstaff.Phone} </th>
+
+            <div class="tablemembers">
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Flat No </th>
+                            <th scope="col"> Name </th>
+                            <th scope="col"> Email </th>
+                            <th scope="col"> Phone </th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <template if:true={storeallsocietymembers} for:each={storeallsocietymembers} for:item="socstaff"
+                            for:index="index">
+                            <tr key={socstaff.Id} class="slds-hint-parent">
+                                <th scope="row"> {socstaff.Flat_No__c} </th>
+                                <th scope="row"> {socstaff.Name} </th>
+                                <th scope="row"> {socstaff.Email__c} </th>
+                                <th scope="row"> {socstaff.Phone} </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </lightning-card>
     </template>
 
 
 
     <template if:true={showallsocietystaff}>
-        <div class="tablemembers">
+        <lightning-card title="All Society Staff Information">
 
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead>
-                    <tr class="slds-line-height_reset">
-                        <th scope="col">Flat No </th>
-                        <th scope="col"> Name </th>
-                        <th scope="col"> Email </th>
-                        <th scope="col"> Phone </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template if:true={storestaffdata} for:each={storestaffdata} for:item="socstaff" for:index="index">
-                        <tr key={socstaff.Id} class="slds-hint-parent">
-                            <th scope="row"> {socstaff.Flat_No__c} </th>
-                            <th scope="row"> {socstaff.Name} </th>
-                            <th scope="row"> {socstaff.Email__c} </th>
-                            <th scope="row"> {socstaff.Phone} </th>
+            <div class="tablemembers">
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Name </th>
+                            <th scope="col"> Email </th>
+                            <th scope="col"> Phone </th>
+                            <th scope="col"> Society </th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <template if:true={storestaffdata} for:each={storestaffdata} for:item="socstaff"
+                            for:index="index">
+                            <tr key={socstaff.Id} class="slds-hint-parent">
+                                <th scope="row"> {socstaff.Name} </th>
+                                <th scope="row"> {socstaff.Email__c} </th>
+                                <th scope="row"> {socstaff.Phone__c} </th>
+                                <th scope="row"> {socstaff.Society__r.Name} </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </lightning-card>
     </template>
 
 </template>

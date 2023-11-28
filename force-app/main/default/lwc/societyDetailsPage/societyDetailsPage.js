@@ -60,5 +60,8 @@ export default class SocietyDetailsPage extends LightningElement {
     }
 
 
+    handleClickshowallstaff() {
+        this.showallsocietystaff = false;
+    }
 
 }
