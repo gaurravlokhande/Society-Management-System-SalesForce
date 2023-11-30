@@ -2,7 +2,8 @@ import { LightningElement, track } from 'lwc';
 import returndatamaintreq from '@salesforce/apex/SocietyManagementSystem.returndatamaintreq';
 import addmaintenancerequest from '@salesforce/apex/SocietyManagementSystem.addMaintenanceRequest';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from '@salesforce/apex';
+
+
  const columns = [
          {label: 'Name', fieldName: 'Name'},
          {label: 'Requested Date', fieldName: 'Request_Date__c'},
@@ -62,25 +63,33 @@ export default class MaintenanceRequestsPage extends LightningElement {
     }
 
     handleClickofsubmitmaintreq() {
-      
-        addmaintenancerequest({ description: this.targettextareavalue })
-            .then((result) => {
-                this.showmaintenreqdata();
-            this.addmaintenancerequest = false;
+        console.log(this.targettextareavalue)
+        if (this.targettextareavalue === '' || this.targettextareavalue === false) {
             this.dispatchEvent(new ShowToastEvent({
-                title: "title",
-                message: result,
-                variant: "success"
-            }));
-                this.clearallfields();
-            }).catch((error) => {
-                console.log(error.body.message);
-            this.dispatchEvent(new ShowToastEvent({
-                title: "title",
-                message: error.body.message,
+                message: "Please Enter the value",
                 variant: "error"
             }));
-        });
+        } else {
+            addmaintenancerequest({ description: this.targettextareavalue })
+                .then((result) => {
+                    this.showmaintenreqdata();
+                    this.addmaintenancerequest = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: "title",
+                        message: result,
+                        variant: "success"
+                    }));
+                    this.clearallfields();
+                }).catch((error) => {
+                    console.log(error.body.message);
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: "title",
+                        message: error.body.message,
+                        variant: "error"
+                    }));
+                    alert(error.body.message)
+                });
+        }
     }
 
 

@@ -14,11 +14,11 @@ const columns = [
     { label: 'Due DateTime', fieldName: 'Due_Date__c' , initialWidth: 200},
     {
         type: "button", initialWidth: 160, typeAttributes: {
-            label: 'Mark As paid',
-            disabled: false,
+           //label: 'Mark As paid',
+            disabled: {fieldName:'markaspaid'},
             value: 'view',
             iconPosition: 'left',
-           // iconName:'utility:preview',
+            iconName:'action:approval' ,
             variant:'Brand'
         }
     }
@@ -47,6 +47,7 @@ export default class UtilityPage extends LightningElement {
                 ...item,
                 Accountname: item.Flat__r.Name,
                 UtilityProviderName: item.Utility_Provider__r.Name,
+                markaspaid:item.Status__c==='Paid' 
             }));
 
         })
@@ -60,19 +61,28 @@ export default class UtilityPage extends LightningElement {
     @track action;
     
     callRowAction(event) {
-     const action = event.detail.action.label;
+     const action = event.detail.action.iconName;
      this.rowid = event.detail.row.Id;
-        console.log(this.rowid)
+    console.log(this.rowid)
         
     switch (action) {
-        case 'Mark As paid':
+        case 'action:approval':
             markaspaid({ rowId: this.rowid })
-            .then((result) => {
-                this.fetchUtilityBill();
+                .then((result) => {
+                if (result==='Bill paid Successfully') {
+                     this.fetchUtilityBill();
                 this.dispatchEvent(new ShowToastEvent({
                     message: result,
                     variant: "success"
                 }));
+                } else {
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: "title",
+                        message: "Bill Already Paid",
+                        variant: "error"
+                    }));
+                }      
+               
             }).catch((error) => {
                 this.dispatchEvent(new ShowToastEvent({
                     message:error.body.message ,
@@ -81,8 +91,8 @@ export default class UtilityPage extends LightningElement {
             });
             break;
     
-        default:
-            alert('Bill Already Paid');
+        default:   
+           alert('method not working')
             break;
      }
     }

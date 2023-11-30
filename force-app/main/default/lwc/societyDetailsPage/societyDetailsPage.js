@@ -4,7 +4,34 @@ import showallsocietymembers from '@salesforce/apex/SocietyManagementSystem.show
 import showallsocietystaff from '@salesforce/apex/SocietyManagementSystem.showallsocietystaff';
 import showsocietyamenity from '@salesforce/apex/SocietyManagementSystem.showsocietyamenity';
 import { NavigationMixin } from 'lightning/navigation';
+
+
+const columns = [
+    { label: 'Flat No', fieldName: 'Flat_No__c' },
+    { label: 'Name', fieldName: 'Name' },
+    { label: 'Email', fieldName: 'Email__c' },
+    { label: 'Phone', fieldName: 'Phone'},
+    
+];
+
+
+
+const columnstwo = [
+   
+    { label: 'Name', fieldName: 'namestaff' },
+    { label: 'Email', fieldName: 'emailstaff' },
+    { label: 'Phone', fieldName: 'Phonestaff' },
+     { label: 'Society', fieldName: 'societyname' },
+    
+];
+
+
+
 export default class SocietyDetailsPage extends NavigationMixin(LightningElement) {
+
+    columns = columns;
+
+    columnstwo = columnstwo;
 
     connectedCallback() {
         this.getdetailsofsociety();
@@ -16,7 +43,7 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
     getdetailsofsociety() {
         getinfoofsociety()
             .then((result) => {
-            console.log(result)
+            //console.log(result)
             this.Storedata = result;
         }).catch((error) => {
             alert(error.body.message)
@@ -34,7 +61,7 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
         this.showallsocietymembers = true;
         showallsocietymembers()
             .then((result) => {
-                console.log(result)
+                //console.log(result)
             this.storeallsocietymembers = result; 
         }).catch((error) => {
             alert(error.body.message)
@@ -46,33 +73,7 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
     }
 
 
-   onclicknameofsocmem(event) {
-    const recordId = event.currentTarget.dataset.recordid;
-
-    this[NavigationMixin.Navigate]({
-        type: "standard__recordPage",
-        attributes: {
-            actionName: "view",
-            recordId: recordId,  
-        }
-    });
-}
-
     
-    onclicknameofsocstaff(event) {
-        const recordId = event.currentTarget.dataset.recordid;
-
-        this[NavigationMixin.Navigate]({
-            type: "standard__recordPage",
-            attributes: {
-                actionName: "view",
-                recordId: recordId,
-            }
-        });
-    }
-  
-
-
 
 
 
@@ -84,7 +85,13 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
             this.showallsocietystaff = true;
         showallsocietystaff()
             .then((result) => {     
-            this.storestaffdata = result;
+              this.storestaffdata = result.map(item => ({
+                  societyname: item.Society__r.Name,
+                  Phonestaff: item.Phone__c,
+                  emailstaff: item.Email__c,
+                  namestaff: item.Name,
+            }));
+
         }).catch((error) => {
             alert(error.body.message)
         });
@@ -118,6 +125,8 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
             
         });
     }
+
+
 
 
 

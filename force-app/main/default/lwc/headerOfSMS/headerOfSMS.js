@@ -1,41 +1,25 @@
 import { LightningElement, track ,api,wire} from 'lwc';
 import SocietyMSLogo from '@salesforce/resourceUrl/SocietyMS';
 import { NavigationMixin } from 'lightning/navigation';
-//import Devicetype from '@salesforce/client/formFactor';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 
 export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
 
-    // @track largedevice = false;
-    // @track smalldevice = false;
-
-    // connectedCallback() {
-    //     this.determineDeviceType();
-    // }
-
-
-    // determineDeviceType() {
-    //     if (Devicetype ==='Large') {
-    //         this.largedevice = true;
-    //         this.smalldevice = false;
-    //     }
-    //     if (Devicetype === 'Small') {
-    //          this.largedevice = false;
-    //         this.smalldevice = true;
-    //     }
-    // }
-
+    
 
 
 
     @track Societylogo = SocietyMSLogo;
     
-    @track EventPage = false;
-    @track ProfilePage = false;
-    @track utilityPage = false;
-
+ 
+ toggleMenu() {
+        console.log('toggleMenu called');
+        const menuItems = this.template.querySelector('.menu-items');
+        if (menuItems) {
+            menuItems.classList.toggle('show');
+        }
+    }
 
     HandleProfile() {
 

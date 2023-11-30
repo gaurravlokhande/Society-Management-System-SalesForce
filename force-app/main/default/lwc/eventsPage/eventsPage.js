@@ -131,7 +131,11 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
     
     handleYESfUserRegistration(event) {
          if(this.CheckboxValue == false){      
-             alert('check the checkbox value')  
+             this.dispatchEvent(new ShowToastEvent({
+                 title: "title",
+                 message: "Please check the checkbox",
+                 variant: "warning"
+             }));
          } else {
              this.registerforeventscon();
          }     
@@ -141,7 +145,11 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
     registerforeventscon() {
         registerForEvent({ EventId: this.Storeeventid, ContactId: this.Storeidforregisteraion })
              .then((result) => {
-                 alert(JSON.stringify(result))
+                this.dispatchEvent(new ShowToastEvent({
+                    title: "title",
+                    message: result,
+                    variant: "success"
+                }));
                  this.CurrentUserRegistrationTemplate = false;
                  this.CheckboxValue = false;
              }).catch((error) => {

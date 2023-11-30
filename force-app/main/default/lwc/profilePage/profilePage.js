@@ -104,11 +104,19 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
                 // Handle the delete action
                 deletecontact({ contactId: ContactId })
                     .then((result) => {
-                    this.dispatchEvent(new ShowToastEvent({
+                        if (result==='You canot Delete yourself, try to contact Admin') {
+                            this.dispatchEvent(new ShowToastEvent({   
+                                message: "You canot Delete yourself, try to contact Admin",
+                                variant: "warning"
+                            }));
+                        } else {
+                        this.dispatchEvent(new ShowToastEvent({
                         message: result,
                         variant: "success"
-                    }));
+                        }));
                         return refreshApex(this.wireResult);
+                        }
+                   
                     }).catch((error) => {
                         
                     this.dispatchEvent(new ShowToastEvent({
@@ -201,6 +209,17 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
         this.lastName = null;
         this.phone = null;
         this.email = null;
+    }
+
+
+
+    onclickofsocietyname() {
+          this[NavigationMixin.Navigate]({
+            type: "standard__webPage",
+            attributes: {
+               url: "https://gauravlokhande-dev-ed.develop.my.site.com/sms/s/societyallmembers"
+            }
+        });
     }
 }
 

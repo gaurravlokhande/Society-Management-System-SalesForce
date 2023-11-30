@@ -1,7 +1,7 @@
 <template>
     <template if:true={EventSPageTemplate}>
         <div class="event-container">
-            <h1 class="upcoming-events"><b>Upcoming Events of {storesociety}</b></h1>
+            <h1 class="upcoming-events"><b class="upeve">Upcoming Events of {storesociety}</b></h1>
 
 
 
@@ -33,7 +33,7 @@
 
                     <div class="allInformation" key={event.Id}>
                         <div>
-                            <h1 class="society" onclick={onclickofsociety}><b>SOCIETY : </b>{event.Society__r.Name}</h1>
+                            <h1 onclick={onclickofsociety}><b>SOCIETY : </b>{event.Society__r.Name}</h1>
                             <h1><b>ORGANIZER : </b>{event.Organizer__r.Name}</h1>
                             <h1><b>ELIGIBILITY : </b>{event.Eligibility__c}</h1>
                         </div>

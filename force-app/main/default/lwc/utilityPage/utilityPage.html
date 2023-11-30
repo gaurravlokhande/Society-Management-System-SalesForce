@@ -1,9 +1,12 @@
 <template>
+    <div class="container">
+        <h1 class="bill"><b>Utility Payments</b></h1>
+        <div class="datatable">
+            <lightning-datatable key-field="Id" data={Storebilldata} columns={columns} hide-checkbox-column="true"
+                show-row-number-column="true" onrowaction={callRowAction}>
+            </lightning-datatable>
 
+        </div>
 
-    <lightning-datatable key-field="Id" data={Storebilldata} columns={columns} hide-checkbox-column="true"
-        show-row-number-column="true" onrowaction={callRowAction}>
-    </lightning-datatable>
-
-
+    </div>
 </template>

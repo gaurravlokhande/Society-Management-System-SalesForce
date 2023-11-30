@@ -8,125 +8,67 @@
                 <div key={soc.Id} class="society-info-container">
                     <div class="slds-text-heading_large">
                         <p><b>Society Name:</b> {soc.Name}</p>
-                        <p><b>City:</b> {soc.City__c}</p>
-                        <p><b>Society Type:</b> {soc.Society_Type__c}</p>
                         <p><b>Address:</b> {soc.Address__c}</p>
-                        <p><b>Total No Of Flats:</b> {soc.Total_no_of_flats__c}</p>
+                        <p><b>Society Type:</b> {soc.Society_Type__c}</p>
+                        <p><b>City:</b> {soc.City__c}</p>
+                        <p><b>Flats:</b> {soc.Total_no_of_flats__c}</p>
                     </div>
                 </div>
             </template>
 
             <div class="button">
-                <lightning-button variant="brand" label="Show All Society Members"
+                <lightning-button variant="base" label="Show All Society Members"
                     onclick={handleClickshowallfamilymembers} ondblclick={handleClickshowallfamily}></lightning-button>
 
-                <lightning-button class="staff" variant="brand" label="Show All Society Staff"
+                <lightning-button class="staff" style="margin-top: 10px;" variant="base" label="Show All Society Staff"
                     onclick={handleClickofshowallsocietystaff} ondblclick={handleClickshowallstaff}></lightning-button>
 
+                <lightning-button variant="base" style="margin-top: 10px;" label="See Society Amenitys"
+                    onclick={handleseesocietyaminity} ondblclick={ondoubleclicksocietyaminity}></lightning-button>
 
             </div>
-            <lightning-button style="display: flex; justify-content:center; margin-top:15px; padding-bottom:15px"
-                variant="brand" label="See Society Amenitys" onclick={handleseesocietyaminity}
-                ondblclick={ondoubleclicksocietyaminity}></lightning-button>
+
         </div>
 
 
 
+        <div class="datatable">
+            <template if:true={showallsocietymembers}>
+                <lightning-datatable key-field="id" hide-checkbox-column data={storeallsocietymembers}
+                    columns={columns}></lightning-datatable>
+            </template>
 
 
-        <template if:true={showallsocietymembers}>
-            <lightning-card title="All Society Members Information">
 
-
-                <div class="tablemembers">
-
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th scope="col">Flat No </th>
-                                <th scope="col"> Name </th>
-                                <th scope="col"> Email </th>
-                                <th scope="col"> Phone </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template if:true={storeallsocietymembers} for:each={storeallsocietymembers}
-                                for:item="socmem" for:index="index">
-                                <tr key={socmem.Id} class="slds-hint-parent">
-                                    <th scope="row"> {socmem.Flat_No__c} </th>
-                                    <th scope="row" data-recordid={socmem.Id} onclick={onclicknameofsocmem}>
-                                        {socmem.Name}
-                                    </th>
-                                    <th scope="row"> {socmem.Email__c} </th>
-                                    <th scope="row"> {socmem.Phone} </th>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
+            <template if:true={showallsocietystaff}>
+                <div class="datat">
+                    <lightning-datatable key-field="id" hide-checkbox-column data={storestaffdata}
+                        columns={columnstwo}></lightning-datatable>
                 </div>
-            </lightning-card>
-        </template>
 
+            </template>
 
+        </div>
 
-        <template if:true={showallsocietystaff}>
-            <lightning-card title="All Society Staff Information">
-
-                <div class="tablemembers">
-
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th scope="col">Name </th>
-                                <th scope="col"> Email </th>
-                                <th scope="col"> Phone </th>
-                                <th scope="col"> Society </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template if:true={storestaffdata} for:each={storestaffdata} for:item="socstaff"
-                                for:index="index">
-                                <tr key={socstaff.Id} class="slds-hint-parent">
-                                    <th scope="row" data-recordid={socstaff.Id} onclick={onclicknameofsocstaff}>
-                                        {socstaff.Name} </th>
-                                    <th scope="row"> {socstaff.Email__c} </th>
-                                    <th scope="row"> {socstaff.Phone__c} </th>
-                                    <th scope="row"> {socstaff.Society__r.Name} </th>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </lightning-card>
-        </template>
 
 
 
         <template if:true={storesocietyaminity} for:each={storesocietyaminity} for:item="amenity" for:index="index">
             <div class="maindiv" key={amenity.Id}>
 
-                <div class="image" key={amenity.Id}>
+                <!-- <div class="image" key={amenity.Id}>
                     <lightning-formatted-rich-text value={amenity.amenity_Image__c}></lightning-formatted-rich-text>
-                </div>
+                </div> -->
 
                 <div class="allinfo" key={aminity.Id}>
                     <p> <b style="color: black;">Amenity Name: </b> {amenity.Name}</p>
-
-                    <p> <b style="color: black;">Maintenance Schedule: </b> {amenity.Maintenance_Schedule__c}</p>
-                    <!-- <lightning-formatted-date-time class="eventdate" value={amenity.Maintenance_Schedule__c}
-                        year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="false"
-                        time-zone="UTC"></lightning-formatted-date-time> -->
-
-
+                    <p> <b style="color: black;">Maintenance: </b> {amenity.Maintenance_Schedule__c}</p>
                     <p> <b style="color: black;">Society: </b> {amenity.Society__r.Name}</p>
                     <p> <b style="color: black;">Availability: </b> {amenity.Availability__c}</p>
-                </div>
-                <div class="descrip">
                     <p> <b style="color: black;">Description: </b> {amenity.Description__c}</p>
+
                 </div>
-                <div class="bookrul">
-                    <p> <b style="color: black;">Booking Rules: </b> {amenity.Booking_Rules__c}</p>
-                </div>
+
             </div>
         </template>
 

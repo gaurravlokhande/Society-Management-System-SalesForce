@@ -11,19 +11,14 @@
      padding: 20px;
      margin: 20px auto;
      max-width: 600px;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-size: large;
  }
 
  .button {
      margin-top: 20px;
  }
 
- .staff {
-     margin-left: 10px;
- }
-.staff{
-    margin-top: 10px;
-    margin-left: 20px;
-}
 .tablemembers{
     margin-top: 20px;
 }
@@ -47,4 +42,34 @@
 }
 .image{
     margin-left: 20px;
+}
+
+.button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+    flex-direction: column;
+}
+
+
+.allinfo {
+    background-color: #645b5b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.datatable{
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 15px;
+}
+.datat{
+    padding-top: 15px;
+}
+.maindiv{
+        display: flex;
+            justify-content: center;
 }

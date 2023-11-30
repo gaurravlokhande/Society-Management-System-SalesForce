@@ -7,7 +7,7 @@
                 value={profilepic}></lightning-formatted-rich-text>
 
             <p class="accname"><b>{ShowAccname}</b></p>
-            <p class="society"><b>{ShowSociety}</b></p>
+            <p class="society" onclick={onclickofsocietyname}><b>{ShowSociety}</b></p>
             <p class="email"><b>{ShowEmail}</b></p>
             <p class="phone"><b>+91 {ShowPhone}</b></p>
             <p class="flatmember"><b>{ShowFlatemember}</b></p>
@@ -18,13 +18,18 @@
 
 
 
+        <div class="datatable">
+            <div class="familymem" title="Family Members">
+                <lightning-button class="addnewuser" variant="brand" icon-name='utility:adduser' size='large'
+                    onclick={handleClickofAddFamilyMember}></lightning-button>
 
-        <div class="familymem" title="Family Members">
-            <lightning-button class="addnewuser" variant="brand" label="Add Family Members"
-                onclick={handleClickofAddFamilyMember}></lightning-button>
-            <lightning-datatable key-field="Id" data={contacts} columns={columns} onrowaction={handleRowAction}>
-            </lightning-datatable>
+                <lightning-datatable show-row-number-column hide-checkbox-column key-field="Id" data={contacts}
+                    columns={columns} onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </div>
         </div>
+
+
 
 
 

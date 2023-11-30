@@ -23,23 +23,25 @@ export default class FeedbackPage extends LightningElement {
     }
 
     handleClickofSubmit() {
-        addfeedback({Description:this.description, Subject: this.subject})
-            .then((result) => {
-            if (result ==='Feedback already Submitted') {
-                this.dispatchEvent(new ShowToastEvent({
-                    title: "title",
-                    message: result,
-                    variant: "warning"
-                }));
-            } else {
-                this.emptyallfields();
-                 this.dispatchEvent(new ShowToastEvent({
-                title: "title",
-                message: result,
-                variant: "success"
-            }));
-            }
-           
+            addfeedback({ Description: this.description, Subject: this.subject })
+                .then((result) => {
+                    if (result === 'Feedback already Submitted') {
+                        this.dispatchEvent(new ShowToastEvent({
+                            title: "title",
+                            message: result,
+                            variant: "warning"
+                        }));
+
+                    } else {
+                        this.emptyallfields();
+                        this.dispatchEvent(new ShowToastEvent({
+                            title: "title",
+                            message: result,
+                            variant: "success"
+                        }));
+                    }
+
+                        
         }).catch((error) => {
             this.dispatchEvent(new ShowToastEvent({
                 title: "title",

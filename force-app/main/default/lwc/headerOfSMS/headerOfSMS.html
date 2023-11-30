@@ -1,20 +1,27 @@
 <template>
 
     <nav>
-        <p onclick={HandleProfile}><a class="menu-item">My Profile</a></p>
-        <p onclick={HandleEvent}><a class="menu-item">Events</a></p>
-        <p onclick={HandleUtility}><a class="menu-item">Utilities</a></p>
-        <p onclick={HandleMaintenanceRequests}><a class="menu-item">Maintenance Requests</a></p>
-        <p onclick={HandleFeedaack}><a class="menu-item">Feedback</a></p>
+        <div class="stylish-header">
+            <img class="links logo" style="height: 50px;" href="#" src={Societylogo} alt="Society Logo">
 
+            <div class="rightSection">
+                <div class="menu-toggle" onclick={toggleMenu}>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
 
-        <div class="rightSection">
-            <p onclick={handleLogout}><a class="menu-item">Logout</a></p>
-            <!-- <div class="imgdiv">
-                <img style="height: 50px; display: flex; justify-content: left;" src={Societylogo} alt="Society Logo">
-            </div> -->
-
+                </div>
+                <div class="menu-items">
+                    <h1 class="menu-item" onclick={HandleFeedaack} data-type="feedback">Feedback</h1>
+                    <h1 class="menu-item" onclick={HandleMaintenanceRequests} data-type="maintainanceReq">Maintenance
+                        Request</h1>
+                    <h1 class="menu-item" onclick={HandleUtility} data-type="utilities">Utilities</h1>
+                    <h1 class="menu-item" onclick={HandleEvent} data-type="event">Event</h1>
+                    <h1 class="menu-item" onclick={HandleProfile} data-type="myprofile">MyProfile</h1>
+                </div>
+            </div>
         </div>
     </nav>
+
 
 </template>
