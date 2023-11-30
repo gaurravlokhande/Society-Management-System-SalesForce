@@ -3,6 +3,19 @@
 ![Login - Google Chrome 2023-11-30 17-16-07](https://github.com/gaurravlokhande/Society-Management-System-SalesForce/assets/119065314/95c8a987-7936-46bb-b8d8-2563f4fc64be)
 
 
+## For Explore The Website Go to:
+```
+https://gauravlokhande-dev-ed.develop.my.site.com/sms
+```
+
+## For Login into Website Enter:
+```
+Email : dater64484@rdluxe.com
+Password : Gaurav@123
+```
+
+
+
 ## Project Description:
 The Society Management System is a comprehensive solution developed on Salesforce, aimed at streamlining and optimizing various processes within a society. It efficiently manages information related to flats, society members, amenities, utility bills, visitors, events, and more.
 
