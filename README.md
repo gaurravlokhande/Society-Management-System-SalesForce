@@ -10,7 +10,7 @@ https://gauravlokhande-dev-ed.develop.my.site.com/sms
 
 ## For Login into Website Enter:
 ```
-Email : dater64484@rdluxe.com
+Email : yaweto6102@dabeixin.com
 Password : Gaurav@123
 ```
 
