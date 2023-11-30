@@ -1,18 +1,48 @@
-# Salesforce DX Project: Next Steps
+# Project Name: Society Management System
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+## Project Description:
+The Society Management System is a comprehensive solution developed on Salesforce, aimed at streamlining and optimizing various processes within a society. It efficiently manages information related to flats, society members, amenities, utility bills, visitors, events, and more.
 
-## How Do You Plan to Deploy Your Changes?
+## Technology Used:
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+For Admin Side:
+- Objects: Utilized to define and organize data structures.
+- Flow: Implemented for automating and guiding business processes.
+- Profiles: Configured to control access and permissions.
+- Sharing Rules: Established to control data visibility.
 
-## Configure Your Salesforce DX Project
+For Development Side:
+- Lightning Web Components: Used for building dynamic and responsive user interfaces.
+- HTML, CSS, JavaScript: Employed for frontend development.
+- SOQL (Salesforce Object Query Language): Used for querying and retrieving data from Salesforce.
+- Apex: Leveraged for server-side development and custom logic implementation.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+Deployed on: Salesforce Digital Experience Cloud
 
-## Read All About It
+## User Perspective:
+1. User Registration:
+   - Upon logging in as a new user, a popup prompts the selection of a society.
+   - User registers as a member upon society selection.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+2. Access to Society Facilities:
+   - Users gain access to society amenities like gym, swimming pool, etc.
+   - Information about events, society staff, and fellow members is readily available.
+
+3. Utility Bill Management:
+   - Users receive utility bills reflecting their usage.
+   - Convenient platform to view and manage utility expenses.
+
+4. Maintenance Requests:
+   - Users can submit maintenance suggestions through the dedicated tab.
+   - Requests are assigned to specific society staff for prompt resolution.
+
+5. Family Management:
+   - Users can add family members and register them for events.
+   - Simplifies the management of family-related information within the society.
+
+6. Feedback System:
+   - Members can provide feedback on various aspects of the society.
+   - Feedback mechanisms contribute to continuous improvement.
+
+Conclusion:
+The Society Management System on Salesforce Digital Experience Cloud provides a user-friendly interface for society members to efficiently interact with and manage various aspects of their community. From amenities and events to utility bills and maintenance requests, the platform ensures a seamless and organized experience for all users.
