@@ -62,6 +62,12 @@ export default class MaintenanceRequestsPage extends LightningElement {
         this.targettextareavalue = event.target.value;
     }
 
+    onclickofcloseicon() {
+         this.addmaintenancerequest = false;
+    }
+
+
+
     handleClickofsubmitmaintreq() {
         console.log(this.targettextareavalue)
         if (this.targettextareavalue === '' || this.targettextareavalue === false) {

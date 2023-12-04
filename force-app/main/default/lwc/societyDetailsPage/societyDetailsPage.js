@@ -21,8 +21,10 @@ const columnstwo = [
     { label: 'Name', fieldName: 'namestaff' },
     { label: 'Email', fieldName: 'emailstaff' },
     { label: 'Phone', fieldName: 'Phonestaff' },
-     { label: 'Society', fieldName: 'societyname' },
-    
+    { label: 'Staff Role', fieldName: 'staffrole' },
+    { label: 'Society', fieldName: 'societyname' },
+
+    	
 ];
 
 
@@ -90,6 +92,7 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
                   Phonestaff: item.Phone__c,
                   emailstaff: item.Email__c,
                   namestaff: item.Name,
+                  staffrole:item.Staff_Role__c,
             }));
 
         }).catch((error) => {
@@ -125,6 +128,8 @@ export default class SocietyDetailsPage extends NavigationMixin(LightningElement
             
         });
     }
+
+
 
 
 

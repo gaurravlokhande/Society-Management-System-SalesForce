@@ -2,7 +2,6 @@
     <div class="container">
 
 
-
         <div class="main">
             <template if:true={Storedata} for:each={Storedata} for:item="soc" for:index="index">
                 <div key={soc.Id} class="society-info-container">
@@ -16,14 +15,17 @@
                 </div>
             </template>
 
-            <div class="button">
-                <lightning-button variant="base" label="Show All Society Members"
-                    onclick={handleClickshowallfamilymembers} ondblclick={handleClickshowallfamily}></lightning-button>
 
-                <lightning-button class="staff" style="margin-top: 10px;" variant="base" label="Show All Society Staff"
+
+
+            <div class="button">
+                <lightning-button variant="base" label="Members Directory" onclick={handleClickshowallfamilymembers}
+                    ondblclick={handleClickshowallfamily}></lightning-button>
+
+                <lightning-button class="staff" style="margin-top: 10px;" variant="base" label="Staff Directory"
                     onclick={handleClickofshowallsocietystaff} ondblclick={handleClickshowallstaff}></lightning-button>
 
-                <lightning-button variant="base" style="margin-top: 10px;" label="See Society Amenitys"
+                <lightning-button variant="base" style="margin-top: 10px;" label="Amenitys"
                     onclick={handleseesocietyaminity} ondblclick={ondoubleclicksocietyaminity}></lightning-button>
 
             </div>
@@ -61,11 +63,11 @@
                 </div> -->
 
                 <div class="allinfo" key={aminity.Id}>
-                    <p> <b style="color: black;">Amenity Name: </b> {amenity.Name}</p>
-                    <p> <b style="color: black;">Maintenance: </b> {amenity.Maintenance_Schedule__c}</p>
-                    <p> <b style="color: black;">Society: </b> {amenity.Society__r.Name}</p>
-                    <p> <b style="color: black;">Availability: </b> {amenity.Availability__c}</p>
-                    <p> <b style="color: black;">Description: </b> {amenity.Description__c}</p>
+                    <p> <b style="color: white;">Amenity Name: </b> {amenity.Name}</p>
+                    <p> <b style="color: white;">Maintenance: </b> {amenity.Maintenance_Schedule__c}</p>
+                    <p> <b style="color: white;">Society: </b> {amenity.Society__r.Name}</p>
+                    <p> <b style="color: white;">Availability: </b> {amenity.Availability__c}</p>
+                    <p> <b style="color: white;">Description: </b> {amenity.Description__c}</p>
 
                 </div>
 

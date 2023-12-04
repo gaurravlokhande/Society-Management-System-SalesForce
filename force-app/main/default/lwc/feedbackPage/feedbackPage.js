@@ -26,6 +26,7 @@ export default class FeedbackPage extends LightningElement {
             addfeedback({ Description: this.description, Subject: this.subject })
                 .then((result) => {
                     if (result === 'Feedback already Submitted') {
+                        this.emptyallfields();
                         this.dispatchEvent(new ShowToastEvent({
                             title: "title",
                             message: result,

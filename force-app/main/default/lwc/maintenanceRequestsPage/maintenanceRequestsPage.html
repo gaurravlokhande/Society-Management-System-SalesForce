@@ -20,8 +20,12 @@
             <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
                 class="slds-modal slds-fade-in-open">
                 <div class="slds-modal__container">
+
+                    <lightning-icon class="closeicon" onclick={onclickofcloseicon} icon-name='utility:close'
+                        alternative-text='close' size='small' title='close'></lightning-icon>
+
                     <div class="slds-modal__header">
-                        <lightning-textarea max-length="1000" label="DEscribe Your Issue"
+                        <lightning-textarea max-length="1000" label="Describe Your Issue"
                             placeholder="Describe your issue..." value={targettextareavalue}
                             onchange={onchangetestareafield} variant="standard"></lightning-textarea>
 

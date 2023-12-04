@@ -3,6 +3,7 @@ import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem
 import getalluserDetails from '@salesforce/apex/SocietyManagementSystem.getalluserDetails';
 import addFamilyMembers from '@salesforce/apex/SocietyManagementSystem.addFamilyMembers';
 import deletecontact from '@salesforce/apex/SocietyManagementSystem.deleteContact';
+import getvisitorlist from '@salesforce/apex/SocietyManagementSystem.getvisitorlist';
 import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -19,6 +20,7 @@ const columns = [
     { label: 'First Name', fieldName: 'FirstName', type: 'text' },
     { label: 'Last Name', fieldName: 'LastName', type: 'text' },
     { label: 'Email', fieldName: 'Email', type: 'email' },
+     { label: 'Status', fieldName: 'Status__c' },
     { label: 'Phone', fieldName: 'Phone', type: 'phone' },
     {
         type: 'action',
@@ -27,8 +29,18 @@ const columns = [
 ];
 
 
+const visitors = [
+    { label: 'Name', fieldName: 'NAme'},
+    { label: 'Flat', fieldName: 'Flatstore'},
+    { label: 'Date Time', fieldName: 'Datetime' },
+     { label: 'Address', fieldName: 'Address' },
+];
+
+
 export default class ProfilePage extends NavigationMixin(LightningElement) {
     
+    visitors = visitors;
+
 
     connectedCallback() {
         this.getalluserdetails();
@@ -77,7 +89,8 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
     @wire(UserAccountRelatedContacts)
     wiredContacts(result){
         this.wireResult = result;
-         if(result.data){
+        if (result.data) {
+            console.log(result.data);
             this.contacts = result.data;
         }else if(result.error){
             this.error = result.error;
@@ -221,6 +234,39 @@ export default class ProfilePage extends NavigationMixin(LightningElement) {
             }
         });
     }
+
+
+
+    @track Showallflatvisitors = false;
+
+    @track Storeallvisitors = [];
+
+    handleClickofVisitorsbutton() {
+        this.Showallflatvisitors = true;
+        getvisitorlist()
+        .then((result) => {
+            this.Storeallvisitors = result.map(item => ({
+                NAme: item.Name,
+                Datetime: item.Date_Time__c,
+                Address: item.Address__c,
+                Flatstore: item.Flat__r.Name,
+       }));
+       }).catch((err) => {
+   
+     });
+
+    }
+
+
+
+    handledblClickofVisitorsbutton() {
+          this.Showallflatvisitors = false;
+    }
+
+    onclickofcloseicon() {
+          this.Showallflatvisitors = false;
+    }
+
 }
 
 

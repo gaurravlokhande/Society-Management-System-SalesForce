@@ -2,9 +2,8 @@ import { LightningElement, track } from 'lwc';
 import CheckCurrentUserSociety from '@salesforce/apex/SocietyManagementSystem.isCurrentUserSocietyEmpty';
 import SearchEventsForAlreadyRagstered from '@salesforce/apex/SocietyManagementSystem.SearchEventsForAlreadyRagstered';
 import UpdateSocietyOnAccount from '@salesforce/apex/SocietyManagementSystem.UpdateAccountSociety';
-import checkUserRegistrationForEvent from '@salesforce/apex/SocietyManagementSystem.checkUserRegistrationForEvent';
 import registerForEvent from '@salesforce/apex/SocietyManagementSystem.RegisterContactForEvents';
-import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem.UserAccountRelatedContactsforevents';
+import UserAccountRelatedContacts from '@salesforce/apex/SocietyManagementSystem.getUnregisteredContactForEvent';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -71,6 +70,8 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
     @track StoreEventData = [];
     @track storesociety = '';
 
+    @track Registrationrequired = false;
+    
     SocietyAlreadyexist() {
         SearchEventsForAlreadyRagstered({ AlreadyRagistered:this.SocietyExistContact })
         .then((result) => {
@@ -79,9 +80,9 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
             arr.forEach((item) => {
                 this.storesociety = item.Society__r.Name;
                     if (item.Eligibility__c == 'Registration Required') {
-                        item["Registrationrequired"] = true;
+                       this.Registrationrequired = true;
                     } else {
-                         item["Registrationrequired"] = false;
+                         this.Registrationrequired = false;
                     }
                 });
                 
@@ -103,28 +104,16 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
    
 
     // -------------------------Current User Registration------------------------------------------
-    @track Storeeventid;
+     @track Storeeventid;
     @track CurrentUserRegistrationTemplate = false;
 
 
 
 
     handleClickOfRegistrationButton(event) {
-        this.fetchallcontactsdetails();
          this.Storeeventid = event.target.dataset.recordid;
-        // console.log('eventid'+this.Storeeventid)
-           checkUserRegistrationForEvent({eventId:this.Storeeventid})
-            .then((result)=>{
-                if(result=='Already Registered'){
-                    this.dispatchEvent(new ShowToastEvent({
-                        title: "Already Registered",
-                        variant: "warning"
-                    }));
-                }else{
-                this.CurrentUserRegistrationTemplate = true;
-                }
-            })
-         
+        this.fetchallcontactsdetails();
+        this.CurrentUserRegistrationTemplate = true;
          
     }
 
@@ -193,9 +182,12 @@ export default class EventsPage extends  NavigationMixin(LightningElement) {
 
 
      fetchallcontactsdetails() {
-        UserAccountRelatedContacts()
-        .then((result) => {
-            this.Storealluserdetail = result;
+        UserAccountRelatedContacts({eventId:this.Storeeventid})
+            .then((result) => {
+           
+                 this.Storealluserdetail = result;
+
+           
         }).catch((error) => {
             
         });

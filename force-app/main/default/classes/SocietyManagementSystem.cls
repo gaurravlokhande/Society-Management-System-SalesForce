@@ -3,7 +3,7 @@ public without sharing  class SocietyManagementSystem  {
 //SIGNUP PAGE METHODS---------------------------------------------------------------------------------------------------------------
      // Create Account Contact And User 
    @AuraEnabled 
-    public static void createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
+    public static String createAccountAndContact(String firstName, String lastName, String email, String Phone, String Password) {
       
              Account acc = new Account();
              acc.Name = firstName + ' ' + lastName;
@@ -36,8 +36,11 @@ public without sharing  class SocietyManagementSystem  {
                 user.LanguageLocaleKey = 'en_US';
                 user.IsActive = true;
             insert user;
+           
             System.setpassword(user.Id,Password);
+            
             site.login(user.Username,Password,'/sms/s');
+        return 'user created successfully';
           
     }
     
@@ -296,6 +299,146 @@ public static String changeUtilityStatus(String rowId) {
   
     
     
+    
+    
+    // Maintenance request page-----------------------------------------------------------------------------------
+    
+    
+    //Show Maintenance requests data 
+    @AuraEnabled
+    Public Static List<Maintenance_Request__c> returndatamaintreq(){
+        String currentUserName = UserInfo.getUserName();
+         //String currentUserName = 'dater64484@rdluxe.com';
+        List<Account> getlist =[Select Id, Name, Email__c From Account Where Email__c=:currentUserName];
+        List<Maintenance_Request__c> maintreqlist  =[Select Id,Name,Assigned_to__r.Name,Description__c,Flat__r.Name,Request_Date__c,Requested_By__r.Name,Society__r.Name,Status__c From Maintenance_Request__c Where Flat__c=:getlist[0].Id ];
+        System.debug(maintreqlist);
+        return maintreqlist;
+    }
+    
+    
+    // Add new maintenance request
+@AuraEnabled
+public static String addMaintenanceRequest(String description) {
+    String currentUserName = UserInfo.getUserName();
+    List<Account> accList = [SELECT Id, Society__c, Name, Email__c FROM Account WHERE Email__c = :currentUserName LIMIT 1];
+
+    if (!accList.isEmpty()) {
+        List<Contact> conList = [SELECT Id, AccountId FROM Contact WHERE AccountId = :accList[0].Id LIMIT 1];
+
+        if (!conList.isEmpty()) {
+            Maintenance_Request__c mainReq = new Maintenance_Request__c();
+            mainReq.Description__c = description;
+            mainReq.Flat__c = accList[0].Id;
+            mainReq.Request_Date__c = System.today();
+            mainReq.Society__c = accList[0].Society__c;
+            mainReq.Requested_By__c = conList[0].Id;
+            mainReq.Status__c = 'New';
+            insert mainReq;
+
+            return 'Maintenance Request added successfully';
+        } else {
+            return 'Error: Contact not found for the current user';
+        }
+    } else {
+        return 'Error: Account not found for the current user';
+    }
+}
 
     
+    
+    //feedback page--------------------------------------------------------------------------------------------
+   
+    @AuraEnabled
+    public static String addfeedback(String Description, String Subject){
+        
+    String currentUserName = UserInfo.getUserName();
+           //  String currentUserName = 'dater64484@rdluxe.com';
+        
+        List<Account> accList =[Select Id,Email__c,Society__c, Name from Account where Email__c=:currentUserName];
+        if(!accList.isEmpty()){
+          
+        List<Contact> conList =[Select Id, Name, Email From Contact Where AccountId=:acclist[0].Id AND Email=:accList[0].Email__c];
+        if(!conList.isEmpty()){
+            
+        List<Feedback__c> feedback =[Select Society__c, Submitted_By__c From Feedback__c where Society__c=:accList[0].Society__c AND Submitted_By__c=:conList[0].Id ];
+        if(!feedback.isEmpty()){
+              return 'Feedback already Submitted';
+         } else{
+        Feedback__c feed =new Feedback__c();
+        feed.Name =Subject;
+        feed.Description__c=Description;
+        feed.Submission_Date__c=System.today();
+        feed.Society__c =accList[0].Society__c;
+        feed.Submitted_By__c=conList[0].Id;
+        Insert feed;
+        return 'Feedback Submitted Successfull';
+                  } 
+       
+            }
+            return 'Conlist Empty';
+        }
+        return 'accList Empty';
+    }
+    
+
+    
+    // Show Society Data on Societyalldetails page
+   
+    @AuraEnabled
+    public static List<Society__c> getinfoofsociety(){
+         String currentUserName = UserInfo.getUserName();
+
+        
+        List<Account> accList =[Select Id, Society__r.Name From Account Where Email__c=:currentUserName ];
+        
+        List<Society__c> societydata =[Select Name,Total_no_of_flats__c,City__c,Society_Type__c,Address__c FROM Society__c where Name=:accList[0].Society__r.Name ];
+        system.debug(societydata);
+        return societydata;
+        
+    }
+    
+    
+    @AuraEnabled
+    public static List<Account> showallsocietymembers(){
+        String currentUserName = UserInfo.getUserName();
+           //String currentUserName = 'dater64484@rdluxe.com';
+        List<Account> acclIst =[Select Id, Society__c, Email__c from Account Where Email__c =:currentUserName];
+        if(!acclIst.isEmpty()){
+         list<Account> allacclist =[ Select Id, Name,Email__c, Phone,Flat_No__c From Account Where Society__c=:acclist[0].Society__c];
+            System.debug(allacclist);
+            return allacclist;
+        }
+        return acclIst;
+    }
+    
+    
+    @AuraEnabled
+    Public Static List<	Society_Staff__c> showallsocietystaff(){
+         String currentUserName = UserInfo.getUserName();
+         // String currentUserName = 'dater64484@rdluxe.com';
+        List<Account> acclIst =[Select Id, Society__c, Email__c from Account Where Email__c =:currentUserName];
+        
+        List<Society_Staff__c> allsocietystaff =[Select Name,Email__c,Phone__c,Society__r.Name,Staff_Role__c from Society_Staff__c where Society__c=: acclIst[0].Society__c];
+        System.debug(allsocietystaff);        
+        return allsocietystaff;
+        
+    }
+    
+    
+    
+    
+    //Show all Society Aminity  data
+   @AuraEnabled
+    Public Static List<Amenity__c> showsocietyamenity(){
+        List<Amenity__c> socamenity =[Select Id,Name,Society__r.Name,Maintenance_Schedule__c,Description__c,amenity_Image__c,Booking_Rules__c, Availability__c	From Amenity__c ];
+        system.debug(socamenity);
+        return socamenity;
+    }
+   
+    
+    
+
+   
+
+
 }

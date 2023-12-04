@@ -1,4 +1,4 @@
-import { LightningElement, track ,api,wire} from 'lwc';
+import { LightningElement, track } from 'lwc';
 import SocietyMSLogo from '@salesforce/resourceUrl/SocietyMS';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -14,7 +14,6 @@ export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
     
  
  toggleMenu() {
-        console.log('toggleMenu called');
         const menuItems = this.template.querySelector('.menu-items');
         if (menuItems) {
             menuItems.classList.toggle('show');
@@ -67,11 +66,6 @@ export default class HeaderOfSMS extends NavigationMixin(LightningElement)  {
             }
         });
     }
-
-
-
-
-
-       
+ 
 
 }

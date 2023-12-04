@@ -7,7 +7,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const columns = [
     { label: 'Invoice No', fieldName: 'Name', initialWidth: 100 },
     { label: 'Amount', fieldName: 'Amount__c', initialWidth: 100},
-    { label: 'Status', fieldName: 'Status__c' , initialWidth: 100},
+    { label: 'Payment Status', fieldName: 'Payment_Status__c', initialWidth: 130 },
+     { label: 'Status', fieldName: 'Status__c' , initialWidth: 140},
     { label: 'Account Name', fieldName: 'Accountname', initialWidth: 150 },
     { label: 'Utility Provider Name', fieldName: 'UtilityProviderName', initialWidth: 150 },
     { label: 'Created DateTime', fieldName: 'Created_Date__c', initialWidth: 200 },
@@ -47,7 +48,7 @@ export default class UtilityPage extends LightningElement {
                 ...item,
                 Accountname: item.Flat__r.Name,
                 UtilityProviderName: item.Utility_Provider__r.Name,
-                markaspaid:item.Status__c==='Paid' 
+                markaspaid:item.Payment_Status__c ==='Paid' || item.Payment_Status__c ==='Pending'||  item.Payment_Status__c ==='Unpaid',
             }));
 
         })
@@ -72,7 +73,7 @@ export default class UtilityPage extends LightningElement {
                 if (result==='Bill paid Successfully') {
                      this.fetchUtilityBill();
                 this.dispatchEvent(new ShowToastEvent({
-                    message: result,
+                    message: 'Successfully Submitted for Review',
                     variant: "success"
                 }));
                 } else {

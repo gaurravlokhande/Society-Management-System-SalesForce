@@ -40,7 +40,8 @@
                     </div>
 
                     <!-- Register here and add new family member buttons -->
-                    <template if:true={event.Registrationrequired}>
+                    <!-- <template if:true={event.Registrationrequired}> -->
+                    <template if:true={Registrationrequired}>
                         <div class="register-buttons">
                             <lightning-button data-recordid={event.Id} class="buttonregistration" variant="brand"
                                 label="Register Here" onclick={handleClickOfRegistrationButton}
