@@ -92,7 +92,7 @@ public static String UpdateAccountSociety(String SocietyId) {
 
     
 //To Check is user already registered or not
-   //To Check is user already registered or not
+  /* 
     @AuraEnabled
     public static String checkUserRegistrationForEvent(String eventId){
         String currentUserName = UserInfo.getUserName();
@@ -102,6 +102,8 @@ public static String UpdateAccountSociety(String SocietyId) {
         } 
         return 'Please Register';
     }
+    
+  */
     
     
    // current user Register for events
@@ -131,23 +133,36 @@ public static String registerForEvent(String eventId) {
     
     
     //fetch data of current user contact for register
-  @AuraEnabled(Cacheable=True)
-  public static List<Contact> UserAccountRelatedContactsforevents() {   
- String currentUserName = UserInfo.getUserName(); 
-      
- List<Account> relatedcontact = [Select Id, Name, Email__c From Account Where Email__c =:currentUserName]; 
-      
- List<Contact> accountrelatedcon = new List<Contact>();
-      
- if (!relatedcontact.isEmpty()) {
-    for (Account account : relatedcontact) {
-      List<Contact> contactsForAccount = [Select Id, AccountId,Name, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
-      accountrelatedcon.addAll(contactsForAccount);
+
+  @AuraEnabled
+ public static List<Contact> getUnregisteredContactForEvent(String eventId) { 
+    String currentUserName = UserInfo.getUserName();
+    List<Account> getAccounts = [SELECT Id, Name, Email__c FROM Account WHERE Email__c = :currentUserName LIMIT 1];
+    
+    List<Contact> getUnregisteredContacts = new List<Contact>();
+    
+    if (!getAccounts.isEmpty()) {
+        List<Contact> allContacts = [SELECT Id, Name, Phone, Email FROM Contact WHERE AccountId IN :getAccounts];
+
+        List<Event_Registration__c> eventRegList = [SELECT Resident__c FROM Event_Registration__c WHERE Resident__c != null AND Event__c = :eventId];
+        Set<Id> registeredContactIds = new Set<Id>();
+        
+        // Collect the IDs of contacts registered for the event
+        for (Event_Registration__c eventReg : eventRegList) {
+            registeredContactIds.add(eventReg.Resident__c);
+        }
+
+        for (Contact con : allContacts) {
+            if (!registeredContactIds.contains(con.Id)) {
+                getUnregisteredContacts.add(con);
+            }
+        }
     }
-   }
-   
-  return accountrelatedcon;
- }
+    
+    System.debug('getUnregisteredContacts: ' + getUnregisteredContacts);
+    return getUnregisteredContacts;
+}
+    
     
     
    
@@ -181,7 +196,6 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
     
     
     
-//EVENT PAGE METHODS---------------------------------------------------------------------------------------------------------------
 
     
 //Profile Page Methods---------------------------------------------------------------------------------------------------------------
@@ -197,10 +211,7 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
     }
 
     
-    
-    
-    
- //Get All Current User Account Related Contacts
+    //Get All Current User Account Related Contacts
   @AuraEnabled(Cacheable=True)
   public static List<Contact> UserAccountRelatedContacts() {   
  String currentUserName = UserInfo.getUserName(); 
@@ -211,13 +222,21 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
       
  if (!relatedcontact.isEmpty()) {
     for (Account account : relatedcontact) {
-      List<Contact> contactsForAccount = [Select Id, AccountId, FirstName,LastName, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
+      List<Contact> contactsForAccount = [Select Id,Status__c, AccountId, FirstName,LastName, Email, Phone, Society__r.Name From Contact Where AccountId=:account.Id];
       accountrelatedcon.addAll(contactsForAccount);
     }
    }
    
   return accountrelatedcon;
  }
+    
+    
+ 
+    
+    
+    
+    
+    
     
  // For Deleting Contact
     @AuraEnabled
@@ -251,6 +270,9 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
         newContact.LastName = lastName;
         newContact.Email = email;
         newContact.Phone = phone;
+        newContact.Flat__c=accList[0].Id;
+        newContact.Status__c='pending';
+        
         insert newContact;
         return 'Contact Created';
     } else {
@@ -258,7 +280,7 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
     }
 }
     
-    
+  
 // Utility -----------------------------------------
 
     // for fetching data of utility payment of current user
@@ -267,11 +289,12 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
             String useremail = UserInfo.getUserName();
         List<Account> accList = [Select Id, Name FROM Account Where Email__c =:useremail];
         
-        List<Utility_Payment__c> getcurreuntuserinvoice = [Select Name,	Flat__r.Name, Amount__c,Utility_Provider__r.Name,Status__c,Created_Date__c,Due_Date__c From Utility_Payment__c where Flat__c =:accList[0].Id];
+        List<Utility_Payment__c> getcurreuntuserinvoice = [Select Name,	Flat__r.Name, Amount__c,Utility_Provider__r.Name,Payment_Status__c,	Status__c,Created_Date__c,Due_Date__c From Utility_Payment__c where Flat__c =:accList[0].Id];
         
         return getcurreuntuserinvoice;
     }
  
+    
     
     
      // for paid bill status of current user
@@ -281,13 +304,13 @@ public static String changeUtilityStatus(String rowId) {
 
      List<Account> accList = [SELECT Id, Name, Email__c FROM Account WHERE Email__c = :currentUserName];
 
-     List<Utility_Payment__c> utiList = [SELECT Id, Flat__c, Amount__c,Status__c
+     List<Utility_Payment__c> utiList = [SELECT Id, Flat__c, Amount__c,Payment_Status__c
                                         FROM Utility_Payment__c WHERE Flat__c = :accList[0].Id AND Id =:rowId];
 
     if(utiList!=null){
      for (Utility_Payment__c utility : utiList) {
-         if (utility.Status__c == 'Unpaid') {
-             utility.Status__c = 'Paid';
+         if( utility.Payment_Status__c == 'New'){
+             utility.Payment_Status__c = 'Pending';
              update utiList;
             return 'Bill paid Successfully';
          }
@@ -298,7 +321,7 @@ public static String changeUtilityStatus(String rowId) {
 }
   
     
-    
+
     
     
     // Maintenance request page-----------------------------------------------------------------------------------
@@ -343,8 +366,8 @@ public static String addMaintenanceRequest(String description) {
         return 'Error: Account not found for the current user';
     }
 }
-
     
+
     
     //feedback page--------------------------------------------------------------------------------------------
    
@@ -437,8 +460,42 @@ public static String addMaintenanceRequest(String description) {
    
     
     
-
+   @AuraEnabled
+    public static List<Visitor__c> fetchvisitorsdata(){
+           String currentUserName = UserInfo.getUserName();
+        List<Account> accList =[Select Id, Society__c from Account Where Email__c =:currentUserName];
+        List<Visitor__c> visitorlist =[Select Id, Name,Address__c,Date_Time__c,Flat__r.Name From Visitor__c where flat__c=:accList[0].Id ];
+        return visitorlist;
+    }
    
+    
+  
+   public static void deleteAccounts() {
+    // Collect all user emails in a set for efficient comparison
+    Set<String> userEmails = new Set<String>();
+    for (User u : [SELECT Email FROM User]) {
+        userEmails.add(u.Email);
+    }
+
+    // Query and delete accounts based on the user email set
+    List<Account> acclistToDelete = [SELECT Id, Name, Email__c, Phone FROM Account WHERE Email__c NOT IN :userEmails];
+
+    delete acclistToDelete;
+}
+
+
+     // visitors----------------------------------
+     @AuraEnabled
+    public Static List<Visitor__c> getvisitorlist(){
+         String currentUserName = UserInfo.getUserName();
+        
+        List<Account> accList =[Select Id, Society__c from Account Where Email__c =:currentUserName];
+        
+        List<Visitor__c> getallvisitors =[Select Name, Flat__r.Name,Date_Time__c,Address__c FROM Visitor__c WHERE Flat__c=: accList[0].Id];
+        
+        return getallvisitors;
+    }
+
 
 
 }
