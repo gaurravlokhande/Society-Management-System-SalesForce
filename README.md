@@ -16,7 +16,7 @@ Password : Gaurav@123
 ```
 
 
-
+```
 ## Project Description:
 The Society Management System is a comprehensive solution developed on Salesforce, aimed at streamlining and optimizing various processes within a society. It efficiently manages information related to flats, society members, amenities, utility bills, visitors, events, and more.
 
@@ -62,8 +62,9 @@ Deployed on: Salesforce Digital Experience Cloud
    - Feedback mechanisms contribute to continuous improvement.
 
       The Society Management System on Salesforce Digital Experience Cloud provides a user-friendly interface for society members to efficiently interact with and manage various aspects of their community. From amenities and events to utility bills and maintenance requests, the platform ensures a seamless and organized experience for all users.
-
-
+```
+<br> <br>
+```
 ## Utility Payments Approval Process:
 
 1. Status Transition:
@@ -112,6 +113,8 @@ Deployed on: Salesforce Digital Experience Cloud
    - Assigned managers or users approve or reject the payment.
    - If approved, the status changes to "Approved" and the payment is marked as "Paid," triggering an approval email.
    - If rejected, the status reverts to "Unpaid," and a rejection email is sent.
+
+```
 
 2. Profile Page Approval Process:
    - When a new family member is added, the status is set to "Submit for Approval."
