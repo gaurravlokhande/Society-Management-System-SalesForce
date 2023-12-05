@@ -61,5 +61,61 @@ Deployed on: Salesforce Digital Experience Cloud
    - Members can provide feedback on various aspects of the society.
    - Feedback mechanisms contribute to continuous improvement.
 
-Conclusion:
-The Society Management System on Salesforce Digital Experience Cloud provides a user-friendly interface for society members to efficiently interact with and manage various aspects of their community. From amenities and events to utility bills and maintenance requests, the platform ensures a seamless and organized experience for all users.
+      The Society Management System on Salesforce Digital Experience Cloud provides a user-friendly interface for society members to efficiently interact with and manage various aspects of their community. From amenities and events to utility bills and maintenance requests, the platform ensures a seamless and organized experience for all users.
+
+
+## Utility Payments Approval Process:
+
+1. Status Transition:
+   - Initial Status: Unpaid
+   - User Action - Click on Pay:
+     - New Status: Submit for Approval
+     - Assigned to: Manager or Specific User
+   - Manager/User Approval:
+     - Approval:
+       - New Status: Approved
+       - Further Action: Mark as Paid
+       - Notification: Send approval email
+     - Rejection:
+       - New Status: Unpaid
+       - Notification: Send rejection email
+
+2. Fields:
+   - Amount Status:
+     - Options: Paid, Unpaid
+   - Status:
+     - Options: Submit for Approval, Rejected, Approved
+
+## Profile Page Approval Process:
+
+1. Status Transition:
+   - Initial Status: Submit for Approval
+   - User Action - New Family Member Add:
+     - New Status: Submit for Approval
+     - Assigned to: Manager or Specific User
+   - Manager/User Approval:
+     - Approval:
+       - New Status: Approved
+       - Notification: Send approval email
+     - Rejection:
+       - New Status: Rejected
+       - Notification: Send rejection email
+
+2. Fields:
+   - Status:
+     - Options: Submit for Approval, Approved, Rejected
+
+## Explanation:
+
+1. Utility Payments Approval Process:
+   - Users initiate payment, moving the status to "Submit for Approval."
+   - Assigned managers or users approve or reject the payment.
+   - If approved, the status changes to "Approved" and the payment is marked as "Paid," triggering an approval email.
+   - If rejected, the status reverts to "Unpaid," and a rejection email is sent.
+
+2. Profile Page Approval Process:
+   - When a new family member is added, the status is set to "Submit for Approval."
+   - Assigned managers or users approve or reject the addition.
+   - If approved, the status changes to "Approved," triggering an approval email.
+   - If rejected, the status becomes "Rejected," and a rejection email is sent.
+
