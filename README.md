@@ -1,5 +1,18 @@
 # Project Name: Society Management System
 
+```
+## Whole Objects And Fields Documentation:
+[SOCIETY MANAGEMENT SYSTEM Objects.txt](https://github.com/gaurravlokhande/Society-Management-System-SalesForce/files/13559350/SOCIETY.MANAGEMENT.SYSTEM.Objects.txt)
+```
+
+```
+## Schema Diagram Of SMS:
+![Society Management System ERD](https://github.com/gaurravlokhande/Society-Management-System-SalesForce/assets/119065314/94dd1020-4117-4c7e-86ba-e962db75a6a7)
+```
+
+
+
+
 ![Login - Google Chrome 2023-11-30 17-16-07](https://github.com/gaurravlokhande/Society-Management-System-SalesForce/assets/119065314/95c8a987-7936-46bb-b8d8-2563f4fc64be)
 ![profilePage js - SocietyManagementSystem - Visual Studio Code 2023-11-30 18-06-26](https://github.com/gaurravlokhande/Society-Management-System-SalesForce/assets/119065314/399840ee-28f6-4875-81c0-d44bd80961d7)
 
