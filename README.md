@@ -114,7 +114,6 @@ Deployed on: Salesforce Digital Experience Cloud
    - If approved, the status changes to "Approved" and the payment is marked as "Paid," triggering an approval email.
    - If rejected, the status reverts to "Unpaid," and a rejection email is sent.
 
-```
 
 2. Profile Page Approval Process:
    - When a new family member is added, the status is set to "Submit for Approval."
@@ -122,3 +121,5 @@ Deployed on: Salesforce Digital Experience Cloud
    - If approved, the status changes to "Approved," triggering an approval email.
    - If rejected, the status becomes "Rejected," and a rejection email is sent.
 
+
+```
