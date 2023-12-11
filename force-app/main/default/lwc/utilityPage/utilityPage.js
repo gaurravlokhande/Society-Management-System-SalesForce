@@ -68,6 +68,7 @@ export default class UtilityPage extends LightningElement {
         
     switch (action) {
         case 'action:approval':
+            
             markaspaid({ rowId: this.rowid })
                 .then((result) => {
                 if (result==='Bill paid Successfully') {

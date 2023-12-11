@@ -35,6 +35,7 @@ public without sharing  class SocietyManagementSystem  {
                user.ProfileId = desiredProfile.Id;
                 user.LanguageLocaleKey = 'en_US';
                 user.IsActive = true;
+               user.ManagerId='2F0055j00000874WS';
             insert user;
            
             System.setpassword(user.Id,Password);
@@ -230,10 +231,7 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
   return accountrelatedcon;
  }
     
-    
- 
-    
-    
+
     
     
     
@@ -271,8 +269,7 @@ public static String RegisterContactForEvents(String EventId, String ContactId) 
         newContact.Email = email;
         newContact.Phone = phone;
         newContact.Flat__c=accList[0].Id;
-        newContact.Status__c='pending';
-        
+        newContact.Status__c='Pending';
         insert newContact;
         return 'Contact Created';
     } else {
@@ -488,7 +485,7 @@ public static String addMaintenanceRequest(String description) {
      @AuraEnabled
     public Static List<Visitor__c> getvisitorlist(){
          String currentUserName = UserInfo.getUserName();
-        
+
         List<Account> accList =[Select Id, Society__c from Account Where Email__c =:currentUserName];
         
         List<Visitor__c> getallvisitors =[Select Name, Flat__r.Name,Date_Time__c,Address__c FROM Visitor__c WHERE Flat__c=: accList[0].Id];
